@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Levelmanager : OdinserializedSingletonBehaviour<Levelmanager>
+public class LevelManager : OdinserializedSingletonBehaviour<LevelManager>
 {
     public Cube cubePrefab;
     
-    [Header("Level Settings")]
     public LevelSetting defaultLevelSettings;
+
+    [BoxGroup("Debug"), PropertyOrder(1)]
+    public Side debugSide;
 
     public Transform LevelParent { get; private set; }
     public LevelSetting CurrentLevelSetting { get; private set; }
@@ -24,22 +26,10 @@ public class Levelmanager : OdinserializedSingletonBehaviour<Levelmanager>
         Generate(defaultLevelSettings);
     }
 
-    [Button("Group Top")]
-    public void JoinTopSide()
+    [BoxGroup("Debug"), Button("Group Debug Side"), PropertyOrder(1)]
+    public void GroupDebugSide()
     {
-        GroupSide(Side.Top);
-    }
-
-    [Button("Group Left")]
-    public void JoinLeftSide()
-    {
-        GroupSide(Side.Left);
-    }
-
-    [Button("Group Right")]
-    public void JoinRightSide()
-    {
-        GroupSide(Side.Right);
+        GroupSide(debugSide);
     }
 
     public void Generate(LevelSetting levelSetting)
@@ -62,15 +52,25 @@ public class Levelmanager : OdinserializedSingletonBehaviour<Levelmanager>
     {
         ClearSides();
 
-        var topY = (CurrentLevelSetting.height - 1f) / 2f;
-        var leftX = -(CurrentLevelSetting.width - 1f) / 2f;
-        var rightZ = -(CurrentLevelSetting.depth - 1f) / 2f;
+        var upY = (CurrentLevelSetting.height - 1f) / 2f;
+        var downY = -(CurrentLevelSetting.height - 1f) / 2f;
+
+        var leftX = (CurrentLevelSetting.width - 1f) / 2f;
+        var rightX = -(CurrentLevelSetting.width - 1f) / 2f;
+
+        var frontZ = (CurrentLevelSetting.depth - 1f) / 2f;
+        var backZ = -(CurrentLevelSetting.depth - 1f) / 2f;
 
         foreach (var cube in AllCubes)
         {
-            if (Mathf.Abs(cube.transform.position.y - topY) < 0.01f)
+            if (Mathf.Abs(cube.transform.position.y - upY) < 0.01f)
             {
-                Sides[Side.Top].Add(cube);
+                Sides[Side.Up].Add(cube);
+            }
+
+            if (Mathf.Abs(cube.transform.position.y - downY) < 0.01f)
+            {
+                Sides[Side.Down].Add(cube);
             }
 
             if (Mathf.Abs(cube.transform.position.x - leftX) < 0.01f)
@@ -78,9 +78,19 @@ public class Levelmanager : OdinserializedSingletonBehaviour<Levelmanager>
                 Sides[Side.Left].Add(cube);
             }
 
-            if (Mathf.Abs(cube.transform.position.z - rightZ) < 0.01f)
+            if (Mathf.Abs(cube.transform.position.x - rightX) < 0.01f)
             {
                 Sides[Side.Right].Add(cube);
+            }
+
+            if (Mathf.Abs(cube.transform.position.z - frontZ) < 0.01f)
+            {
+                Sides[Side.Front].Add(cube);
+            }
+
+            if (Mathf.Abs(cube.transform.position.z - backZ) < 0.01f)
+            {
+                Sides[Side.Back].Add(cube);
             }
         }
     }
