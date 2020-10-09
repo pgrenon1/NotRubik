@@ -1,0 +1,33 @@
+{
+    "name": "PlayerControls",
+    "maps": [
+        {
+            "name": "PlayerActions",
+            "id": "89abbe21-61fc-4d5c-8c16-df1b1d0f2658",
+            "actions": [
+                {
+                    "name": "Press",
+                    "type": "Button",
+                    "id": "a53e851e-8cb3-4a81-a561-1901c956350b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3208c2f4-acf4-4c39-8267-7f51481eae33",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

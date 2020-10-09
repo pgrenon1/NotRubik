@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192d9b0f6f11ddc49866e34c773db9e7, type: 3}
   m_Name: ShuffleTest
   m_EditorClassIdentifier: 
-  steps: []
+  rotationSteps: []
+  stepsText: F F' B'

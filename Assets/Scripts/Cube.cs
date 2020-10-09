@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEditor;
+using DG.Tweening;
 using UnityEngine;
 
 public class Cube : OdinSerializedBehaviour
@@ -13,6 +14,7 @@ public class Cube : OdinSerializedBehaviour
 
     public List<Cubelet> AllCubes { get; private set; } = new List<Cubelet>();
     public Dictionary<Side, List<Cubelet>> Sides { get; private set; } = new Dictionary<Side, List<Cubelet>>();
+
     public GameObject ActiveSideParent { get; private set; }
 
     public CubeDimensions Dimensions { get; set; }
@@ -33,6 +35,22 @@ public class Cube : OdinSerializedBehaviour
 
         ActiveSideParent = new GameObject("ActiveSideParent");
         ActiveSideParent.transform.SetParent(transform);
+    }
+
+    public void RotateSide(RotationStep rotationStep)
+    {
+        GroupSide(rotationStep.side);
+
+        RotateActiveSide(Util.GetAxisForSide(rotationStep.side));
+    }
+
+    private void RotateActiveSide(Vector3 axis)
+    {
+        Quaternion currentRotation = transform.rotation;
+        Quaternion rotation = Quaternion.AngleAxis(90f, axis);
+        Quaternion result = currentRotation * rotation;
+
+        ActiveSideParent.transform.DORotateQuaternion(result, 1f);
     }
 
     private void AddCube(int index, Vector3 position)

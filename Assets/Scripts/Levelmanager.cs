@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 public class LevelManager : OdinserializedSingletonBehaviour<LevelManager>
 {
     public Cube cubePrefab;
-    
+
     public LevelData defaultLevelData;
 
     public Cube CurrentCube { get; private set; }
@@ -17,6 +17,11 @@ public class LevelManager : OdinserializedSingletonBehaviour<LevelManager>
     public void GenerateDefault()
     {
         Generate(defaultLevelData);
+    }
+
+    private void Start()
+    {
+        GenerateDefault();
     }
 
     public void Generate(LevelData levelData)

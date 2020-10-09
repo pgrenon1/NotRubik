@@ -27,7 +27,7 @@ public class Shuffle : ScriptableObject
 
             var clockwise = !stepText.Contains("'");
             var letter = stepText.Replace("'", "")[0];
-            rotationSteps.Add(new RotationStep(GetSideFromChar(letter), clockwise));
+            rotationSteps.Add(new RotationStep(Util.GetSideFromChar(letter), clockwise));
         }
 
         EditorUtility.SetDirty(this);
@@ -40,45 +40,13 @@ public class Shuffle : ScriptableObject
 
         foreach (var step in rotationSteps)
         {
-            var letter = GetLetterForSide(step);
+            var letter = Util.GetLetterForSide(step);
             var sign = step.clockwise ? "" : "'";
             stepsText += letter + sign + " ";
         }
 
         EditorUtility.SetDirty(this);
         AssetDatabase.SaveAssets();
-    }
-
-    private static Side GetSideFromChar(char c)
-    {
-        foreach (Side side in Enum.GetValues(typeof(Side)))
-        {
-            if (Enum.GetName(typeof(Side), side)[0] == c)
-                return side;
-        }
-
-        Debug.LogError("oh no, problem here");
-        return Side.Back;
-    }
-
-    private static char GetLetterForSide(RotationStep step)
-    {
-        return Enum.GetName(typeof(Side), step.side)[0];
-        //switch (step.side)
-        //{
-        //    case Side.Back:
-        //        return "B";
-        //    case Side.Front:
-        //        return "F";
-        //    case Side.Right:
-        //        return "R";
-        //    case Side.Left:
-        //        return "L";
-        //    case Side.Up:
-        //        return "U";
-        //    default:
-        //        return "D";
-        //}
     }
 }
 
