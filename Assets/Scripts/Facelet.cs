@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Face : MonoBehaviour
+public class Facelet : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

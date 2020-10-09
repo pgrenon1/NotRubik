@@ -3,6 +3,7 @@ using Sirenix.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -28,6 +29,9 @@ public class Shuffle : ScriptableObject
             var letter = stepText.Replace("'", "")[0];
             rotationSteps.Add(new RotationStep(GetSideFromChar(letter), clockwise));
         }
+
+        EditorUtility.SetDirty(this);
+        AssetDatabase.SaveAssets();
     }
 
     private void UpdateStepsText()
@@ -40,6 +44,9 @@ public class Shuffle : ScriptableObject
             var sign = step.clockwise ? "" : "'";
             stepsText += letter + sign + " ";
         }
+
+        EditorUtility.SetDirty(this);
+        AssetDatabase.SaveAssets();
     }
 
     private static Side GetSideFromChar(char c)
