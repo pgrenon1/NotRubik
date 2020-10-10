@@ -25,22 +25,29 @@ public static class Util
         return Enum.GetName(typeof(Side), step.side)[0];
     }
 
-    public static Vector3 GetAxisForSide(Side side)
+    public static Vector3 GetAbsoluteAxisForSide(Side side)
     {
         switch (side)
         {
             case Side.Back:
-                return Vector3.back;
             case Side.Front:
                 return Vector3.forward;
             case Side.Right:
-                return Vector3.right;
             case Side.Left:
-                return Vector3.left;
+                return Vector3.right;
             case Side.Up:
-                return Vector3.up;
             default:
-                return Vector3.down;
+                return Vector3.up;
         }
+    }
+
+    public static Vector3 GetAxisForRotationStep(RotationStep rotationStep)
+    {
+        var axis = GetAbsoluteAxisForSide(rotationStep.side);
+
+        if (rotationStep.clockwise)
+            return axis;
+        else
+            return -axis;
     }
 }

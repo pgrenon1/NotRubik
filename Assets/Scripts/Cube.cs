@@ -8,16 +8,17 @@ using UnityEngine;
 public class Cube : OdinSerializedBehaviour
 {
     public Cubelet cubeletPrefab;
+    public float rotationSpeed = 1f;
+    public float sideRotationSpeed = 0.25f;
 
     [BoxGroup("Debug"), PropertyOrder(1)]
     public Side debugSide;
 
     public List<Cubelet> AllCubes { get; private set; } = new List<Cubelet>();
     public Dictionary<Side, List<Cubelet>> Sides { get; private set; } = new Dictionary<Side, List<Cubelet>>();
-
     public GameObject ActiveSideParent { get; private set; }
-
     public CubeDimensions Dimensions { get; set; }
+    public bool IsRotating { get; private set; }
 
     [BoxGroup("Debug"), Button("Group Debug Side"), PropertyOrder(1)]
     public void GroupDebugSide()
@@ -35,22 +36,33 @@ public class Cube : OdinSerializedBehaviour
 
         ActiveSideParent = new GameObject("ActiveSideParent");
         ActiveSideParent.transform.SetParent(transform);
+
+        IsRotating = false;
     }
 
     public void RotateSide(RotationStep rotationStep)
     {
+        if (IsRotating)
+            return;
+
+        IsRotating = true;
+
         GroupSide(rotationStep.side);
 
-        RotateActiveSide(Util.GetAxisForSide(rotationStep.side));
+        RotateActiveSide(Util.GetAxisForRotationStep(rotationStep));
     }
 
     private void RotateActiveSide(Vector3 axis)
     {
-        Quaternion currentRotation = transform.rotation;
-        Quaternion rotation = Quaternion.AngleAxis(90f, axis);
-        Quaternion result = currentRotation * rotation;
+        var rotation = Quaternion.Euler(axis * 90f);
+        var result = transform.localRotation * rotation;
 
-        ActiveSideParent.transform.DORotateQuaternion(result, 1f);
+        ActiveSideParent.transform.DORotateQuaternion(result, sideRotationSpeed).OnComplete(RotationCompleted);
+    }
+
+    private void RotationCompleted()
+    {
+        IsRotating = false;
     }
 
     private void AddCube(int index, Vector3 position)
@@ -60,12 +72,21 @@ public class Cube : OdinSerializedBehaviour
         AllCubes.Add(newCube);
     }
 
-    private void GroupSide(Side side)
+    public void GroupSide(Side side)
     {
         ClearActiveSideParent();
 
         SetupSides();
 
+        ParentCubesToSideRotator(side);
+
+#if UNITY_EDITOR
+        Selection.activeObject = ActiveSideParent;
+#endif
+    }
+
+    private void ParentCubesToSideRotator(Side side)
+    {
         foreach (var kvp in Sides)
         {
             if (kvp.Key == side)
@@ -76,10 +97,6 @@ public class Cube : OdinSerializedBehaviour
                 }
             }
         }
-
-#if UNITY_EDITOR
-        Selection.activeObject = ActiveSideParent;
-#endif
     }
 
     private void CreateCubelets()
@@ -106,43 +123,67 @@ public class Cube : OdinSerializedBehaviour
     {
         ClearSides();
 
-        var upY = (Dimensions.height - 1f) / 2f;
-        var downY = -(Dimensions.height - 1f) / 2f;
+        var upY = float.MinValue;
+        var downY = float.MaxValue;
 
-        var leftX = (Dimensions.width - 1f) / 2f;
-        var rightX = -(Dimensions.width - 1f) / 2f;
+        var leftX = float.MinValue;
+        var rightX = float.MaxValue;
 
-        var frontZ = (Dimensions.depth - 1f) / 2f;
-        var backZ = -(Dimensions.depth - 1f) / 2f;
+        var frontZ = float.MinValue;
+        var backZ = float.MaxValue;
 
         foreach (var cube in AllCubes)
         {
-            if (Mathf.Abs(cube.transform.position.y - upY) < 0.01f)
+            // greatest x
+            if (cube.transform.localPosition.x > leftX)
+                leftX = cube.transform.localPosition.x;
+            // smallest x
+            if (cube.transform.localPosition.x < rightX)
+                rightX = cube.transform.localPosition.x;
+
+            // greatest y 
+            if (cube.transform.localPosition.y > upY)
+                upY = cube.transform.localPosition.y;
+            // smallest y 
+            if (cube.transform.localPosition.y < downY)
+                downY = cube.transform.localPosition.y;
+
+            // greatest z
+            if (cube.transform.localPosition.y > frontZ)
+                frontZ = cube.transform.localPosition.z;
+            // smallest z 
+            if (cube.transform.localPosition.y < backZ)
+                backZ = cube.transform.localPosition.z;
+        }
+
+        foreach (var cube in AllCubes)
+        {
+            if (Mathf.Abs(cube.transform.localPosition.y - upY) < 0.01f)
             {
                 Sides[Side.Up].Add(cube);
             }
 
-            if (Mathf.Abs(cube.transform.position.y - downY) < 0.01f)
+            if (Mathf.Abs(cube.transform.localPosition.y - downY) < 0.01f)
             {
                 Sides[Side.Down].Add(cube);
             }
 
-            if (Mathf.Abs(cube.transform.position.x - leftX) < 0.01f)
+            if (Mathf.Abs(cube.transform.localPosition.x - leftX) < 0.01f)
             {
                 Sides[Side.Left].Add(cube);
             }
 
-            if (Mathf.Abs(cube.transform.position.x - rightX) < 0.01f)
+            if (Mathf.Abs(cube.transform.localPosition.x - rightX) < 0.01f)
             {
                 Sides[Side.Right].Add(cube);
             }
 
-            if (Mathf.Abs(cube.transform.position.z - frontZ) < 0.01f)
+            if (Mathf.Abs(cube.transform.localPosition.z - frontZ) < 0.01f)
             {
                 Sides[Side.Front].Add(cube);
             }
 
-            if (Mathf.Abs(cube.transform.position.z - backZ) < 0.01f)
+            if (Mathf.Abs(cube.transform.localPosition.z - backZ) < 0.01f)
             {
                 Sides[Side.Back].Add(cube);
             }
@@ -155,6 +196,8 @@ public class Cube : OdinSerializedBehaviour
         {
             cube.transform.SetParent(transform);
         }
+
+        ActiveSideParent.transform.localRotation = Quaternion.identity;
     }
 
     private void ClearSides()

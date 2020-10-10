@@ -109,8 +109,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39395f3b075c86840a71d45cb4717ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  side: 0
-  clockwise: 0
+  hoveredColor: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 0.8}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.8}
+  meshRenderer: {fileID: 4689095470916722669}
+  rotationStep:
+    side: 0
+    clockwise: 0
 --- !u!1 &4689095471154308294
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4689095471154308293}
   m_Layer: 0
-  m_Name: SideInput
+  m_Name: RotationInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -252,5 +256,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39395f3b075c86840a71d45cb4717ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  side: 0
-  clockwise: 1
+  hoveredColor: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 0.8}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.8}
+  meshRenderer: {fileID: 4689095471769768868}
+  rotationStep:
+    side: 0
+    clockwise: 0

@@ -60,4 +60,10 @@ public class RotationStep
         this.side = side;
         this.clockwise = clockwise;
     }
+
+    public override string ToString()
+    {
+        var clockwiseString = clockwise ? "" : "'";
+        return Util.GetLetterForSide(this).ToString() + clockwiseString;
+    }
 }
