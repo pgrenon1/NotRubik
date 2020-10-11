@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.InputSystem;
 public class CubeInputs : MonoBehaviour
 {
     public PlayerControls PlayerControls { get; set; }
+    public Cube Cube { get; set; }
 
     protected void Awake()
     {
@@ -17,6 +19,12 @@ public class CubeInputs : MonoBehaviour
     private void Start()
     {
         PlayerControls.PlayerActions.Press.performed += ctx => PointerPress();
+        PlayerControls.CheatActions.TestRotations.performed += ctx => Shuffle();
+    }
+
+    private void Shuffle()
+    {
+        Cube.Shuffle(10);
     }
 
     private void PointerPress()

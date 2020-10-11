@@ -1,9 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class Extensions
 {
+    public static T RandomElement<T>(this List<T> list, bool remove = false)
+    {
+        var index = UnityEngine.Random.Range(0, list.Count);
+        var result = list[index];
 
+        if (remove)
+        {
+            list.RemoveAt(index);
+        }
+
+        return result;
+    }
 }
 
 public static class Util

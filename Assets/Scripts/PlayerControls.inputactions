@@ -46,6 +46,33 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "CheatActions",
+            "id": "6bc44b23-0702-43fc-944c-c6e49be5a969",
+            "actions": [
+                {
+                    "name": "TestRotations",
+                    "type": "Button",
+                    "id": "b300db09-fdcd-4ee4-876d-91ba57d97f92",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fac1ff7f-9a2b-4d7e-aa25-c891699c6958",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TestRotations",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
