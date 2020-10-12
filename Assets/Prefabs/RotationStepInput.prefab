@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 4689095471769768869}
   - component: {fileID: 520050799458641449}
   m_Layer: 0
-  m_Name: Anticlockwise
+  m_Name: Counterclockwise
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
