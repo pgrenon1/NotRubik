@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Cube : OdinSerializedBehaviour
 {
@@ -14,11 +15,12 @@ public class Cube : OdinSerializedBehaviour
     [BoxGroup("Debug"), PropertyOrder(1)]
     public Side debugSide;
 
-    public List<Cubelet> AllCubes { get; private set; } = new List<Cubelet>();
+    public List<Cubelet> AllCubelets { get; private set; } = new List<Cubelet>();
     public Dictionary<Side, List<Cubelet>> Sides { get; private set; } = new Dictionary<Side, List<Cubelet>>();
     public GameObject ActiveSideParent { get; private set; }
-    public CubeDimensions Dimensions { get; set; }
-    public bool IsRotating { get; private set; }
+    public CubeDimensions Dimensions { get; private set; }
+    public bool IsRotating { get; private set; } = false;
+    public Side ActiveSide { get; set; } = Side.None;
 
     [BoxGroup("Debug"), Button("Group Debug Side"), PropertyOrder(1)]
     public void GroupDebugSide()
@@ -32,12 +34,31 @@ public class Cube : OdinSerializedBehaviour
 
         CreateCubelets();
 
-        SetupSides();
-
         ActiveSideParent = new GameObject("ActiveSideParent");
         ActiveSideParent.transform.SetParent(transform);
 
         IsRotating = false;
+    }
+
+    private void Update()
+    {
+
+        UpdateActiveSideVisuals();
+    }
+
+    private void UpdateActiveSideVisuals()
+    {
+        var worldDirection = Util.GetWorldDirectionForSide(ActiveSide);
+        foreach (var cubelet in AllCubelets)
+        {
+            foreach (var facelet in cubelet.facelets)
+            {
+                var faceletIsOnActiveSide = !IsRotating &&
+                                            ActiveSide != Side.None &&
+                                            facelet == cubelet.GetFaceletAtWorldDirection(worldDirection);
+                facelet.highlight.SetActive(faceletIsOnActiveSide);
+            }
+        }
     }
 
     public void RotateSide(RotationStep rotationStep)
@@ -62,38 +83,36 @@ public class Cube : OdinSerializedBehaviour
 
     private void RotationCompleted()
     {
-        IsRotating = false;
-    }
+        SetupSides();
 
-    private void AddCube(int index, Vector3 position)
-    {
-        var newCube = Instantiate(cubeletPrefab, position, Quaternion.identity, transform);
-        newCube.name = "Cube " + index;
-        AllCubes.Add(newCube);
+        IsRotating = false;
     }
 
     public void GroupSide(Side side)
     {
-        ClearActiveSideParent();
-
         SetupSides();
 
-        ParentCubesToSideRotator(side);
+        ActiveSide = side;
+
+        ParentCubesToActiveSideParent(side);
 
 #if UNITY_EDITOR
         Selection.activeObject = ActiveSideParent;
 #endif
     }
 
-    private void ParentCubesToSideRotator(Side side)
+    private void ParentCubesToActiveSideParent(Side side)
     {
         foreach (var kvp in Sides)
         {
-            if (kvp.Key == side)
+            var cubelets = kvp.Value;
+            var cubeletSide = kvp.Key;
+
+            if (cubeletSide == side)
             {
-                foreach (var cube in kvp.Value)
+                foreach (var cubelet in cubelets)
                 {
-                    cube.transform.SetParent(ActiveSideParent.transform);
+                    cubelet.transform.SetParent(ActiveSideParent.transform);
                 }
             }
         }
@@ -112,7 +131,11 @@ public class Cube : OdinSerializedBehaviour
                     float yPos = y - (Dimensions.height - 1f) / 2f;
                     float zPos = z - (Dimensions.depth - 1f) / 2f;
 
-                    AddCube(i, new Vector3(xPos, yPos, zPos));
+                    var newCubelet = Instantiate(cubeletPrefab, new Vector3(xPos, yPos, zPos), Quaternion.identity, transform);
+                    newCubelet.name = "Cube " + i;
+                    newCubelet.Cube = this;
+                    newCubelet.Init();
+                    AllCubelets.Add(newCubelet);
                     i++;
                 }
             }
@@ -121,6 +144,8 @@ public class Cube : OdinSerializedBehaviour
 
     private void SetupSides()
     {
+        ClearActiveSideParent();
+
         ClearSides();
 
         var upY = float.MinValue;
@@ -132,7 +157,7 @@ public class Cube : OdinSerializedBehaviour
         var frontZ = float.MinValue;
         var backZ = float.MaxValue;
 
-        foreach (var cube in AllCubes)
+        foreach (var cube in AllCubelets)
         {
             // greatest x
             if (cube.transform.localPosition.x > leftX)
@@ -156,7 +181,7 @@ public class Cube : OdinSerializedBehaviour
                 backZ = cube.transform.localPosition.z;
         }
 
-        foreach (var cube in AllCubes)
+        foreach (var cube in AllCubelets)
         {
             if (Mathf.Abs(cube.transform.localPosition.y - upY) < 0.01f)
             {
@@ -192,7 +217,7 @@ public class Cube : OdinSerializedBehaviour
 
     private void ClearActiveSideParent()
     {
-        foreach (var cube in AllCubes)
+        foreach (var cube in AllCubelets)
         {
             cube.transform.SetParent(transform);
         }

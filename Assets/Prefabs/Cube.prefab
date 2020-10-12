@@ -64,6 +64,58 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6142667068445172721}
     m_Modifications:
+    - target: {fileID: 682809383192748466, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: rotationStep.side
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 772624432881813500, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: m_Name
+      value: Counterclockwise
+      objectReference: {fileID: 0}
+    - target: {fileID: 772624433203407487, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: m_Name
+      value: Counterclockwise
+      objectReference: {fileID: 0}
+    - target: {fileID: 772624433720211724, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: m_Name
+      value: Counterclockwise
+      objectReference: {fileID: 0}
+    - target: {fileID: 772624433861101708, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: m_Name
+      value: Counterclockwise
+      objectReference: {fileID: 0}
+    - target: {fileID: 772624434675652343, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: m_Name
+      value: Counterclockwise
+      objectReference: {fileID: 0}
+    - target: {fileID: 977138895729839801, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: rotationStep.side
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218212884320297865, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: rotationStep.side
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218212884483215881, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: rotationStep.side
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218212884556569977, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: rotationStep.side
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218212884869902586, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: rotationStep.side
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218212885276658802, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: rotationStep.side
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452709783526767415, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: m_Name
+      value: Counterclockwise
+      objectReference: {fileID: 0}
     - target: {fileID: 5452709785415181092, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -111,6 +163,26 @@ PrefabInstance:
     - target: {fileID: 5452709785415181093, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
       propertyPath: m_Name
       value: Inputs
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520425620735816306, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: rotationStep.side
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520425620984127473, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: rotationStep.side
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520425621508263042, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: rotationStep.side
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520425621648129282, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: rotationStep.side
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520425622464635769, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}
+      propertyPath: rotationStep.side
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae4bd2a41a229b84b8423297c49a7bbd, type: 3}

@@ -1,18 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Facelet : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject highlight;
 
-    // Update is called once per frame
-    void Update()
+    public Cubelet Cubelet { get; set; }
+
+    public void UpdateHighlightVisibility(bool isHighlighted)
     {
-        
+        highlight.SetActive(isHighlighted);
     }
 }

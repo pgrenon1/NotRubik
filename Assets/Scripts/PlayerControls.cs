@@ -33,6 +33,38 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""00249e63-8dea-4fab-af3e-ad492c8ccce8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""f50e0f7d-bdef-42a1-a854-1e273fc864e2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""6108224c-5edc-44b6-bf18-fc2a2f001a83"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""af61a7db-e026-4702-9f61-243cee00ef89"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -57,6 +89,50 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48dd5a98-38d7-4f38-923b-8ffee88becb7"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e04a598-610b-419e-8449-d61fd2a9f61a"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11cbcc22-f4ce-4575-9d9e-1aad2fb476d0"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""beb3cdf6-4409-437b-ba7a-8956cfe22f10"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -67,6 +143,10 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
         m_PlayerActions_Press = m_PlayerActions.FindAction("Press", throwIfNotFound: true);
         m_PlayerActions_MousePosition = m_PlayerActions.FindAction("MousePosition", throwIfNotFound: true);
+        m_PlayerActions_Up = m_PlayerActions.FindAction("Up", throwIfNotFound: true);
+        m_PlayerActions_Down = m_PlayerActions.FindAction("Down", throwIfNotFound: true);
+        m_PlayerActions_Left = m_PlayerActions.FindAction("Left", throwIfNotFound: true);
+        m_PlayerActions_Right = m_PlayerActions.FindAction("Right", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -118,12 +198,20 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private IPlayerActionsActions m_PlayerActionsActionsCallbackInterface;
     private readonly InputAction m_PlayerActions_Press;
     private readonly InputAction m_PlayerActions_MousePosition;
+    private readonly InputAction m_PlayerActions_Up;
+    private readonly InputAction m_PlayerActions_Down;
+    private readonly InputAction m_PlayerActions_Left;
+    private readonly InputAction m_PlayerActions_Right;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerActionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Press => m_Wrapper.m_PlayerActions_Press;
         public InputAction @MousePosition => m_Wrapper.m_PlayerActions_MousePosition;
+        public InputAction @Up => m_Wrapper.m_PlayerActions_Up;
+        public InputAction @Down => m_Wrapper.m_PlayerActions_Down;
+        public InputAction @Left => m_Wrapper.m_PlayerActions_Left;
+        public InputAction @Right => m_Wrapper.m_PlayerActions_Right;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -139,6 +227,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @MousePosition.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnMousePosition;
+                @Up.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnUp;
+                @Up.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnUp;
+                @Up.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnUp;
+                @Down.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDown;
+                @Down.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDown;
+                @Down.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDown;
+                @Left.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnLeft;
+                @Left.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnLeft;
+                @Left.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnLeft;
+                @Right.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRight;
+                @Right.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRight;
+                @Right.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRight;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -149,6 +249,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
+                @Up.started += instance.OnUp;
+                @Up.performed += instance.OnUp;
+                @Up.canceled += instance.OnUp;
+                @Down.started += instance.OnDown;
+                @Down.performed += instance.OnDown;
+                @Down.canceled += instance.OnDown;
+                @Left.started += instance.OnLeft;
+                @Left.performed += instance.OnLeft;
+                @Left.canceled += instance.OnLeft;
+                @Right.started += instance.OnRight;
+                @Right.performed += instance.OnRight;
+                @Right.canceled += instance.OnRight;
             }
         }
     }
@@ -157,5 +269,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnPress(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnUp(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
+        void OnLeft(InputAction.CallbackContext context);
+        void OnRight(InputAction.CallbackContext context);
     }
 }

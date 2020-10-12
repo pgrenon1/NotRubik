@@ -25,6 +25,28 @@ public static class Util
         return Enum.GetName(typeof(Side), step.side)[0];
     }
 
+    public static Vector3 GetWorldDirectionForSide(Side side)
+    {
+        // I know this is wierd but it works so http://gph.is/1gT9SpQ
+        switch (side)
+        {
+            case Side.Back:
+                return Vector3.forward;
+            case Side.Front:
+                return Vector3.back;
+            case Side.Right:
+                return Vector3.right;
+            case Side.Left:
+                return Vector3.left;
+            case Side.Up:
+                return Vector3.down;
+            case Side.Down:
+                return Vector3.up;
+            default:
+                return Vector3.zero;
+        }
+    }
+
     public static Vector3 GetAbsoluteAxisForSide(Side side)
     {
         switch (side)
