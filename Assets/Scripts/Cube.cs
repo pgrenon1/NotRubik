@@ -268,7 +268,7 @@ public class Cube : OdinSerializedBehaviour
     {
         foreach (var cube in AllCubelets)
         {
-            cube.transform.SetParent(transform);
+            cube.transform.SetParent(cubeletsParents);
         }
 
         ActiveSideParent.transform.localRotation = Quaternion.identity;
