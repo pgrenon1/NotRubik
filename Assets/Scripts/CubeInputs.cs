@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class CubeInputs : MonoBehaviour
 {
     public PlayerControls PlayerControls { get; set; }
+    public Cube Cube { get; set; }
 
     protected void Awake()
     {
@@ -18,10 +19,16 @@ public class CubeInputs : MonoBehaviour
     private void Start()
     {
         PlayerControls.PlayerActions.Press.performed += ctx => PointerPress();
+        PlayerControls.CheatActions.Shuffle.performed += ctx => Shuffle();
         PlayerControls.PlayerActions.Up.performed += ctx => RotateCube(Vector3.up);
         //PlayerControls.PlayerActions.Down.performed += ctx => RotateCube(Vector3.down);
         //PlayerControls.PlayerActions.Left.performed += ctx => RotateCube(Vector3.left);
         //PlayerControls.PlayerActions.Right.performed += ctx => RotateCube(Vector3.right);
+    }
+
+    private void Shuffle()
+    {
+        Cube.Shuffle(10);
     }
 
     private void RotateCube(Vector3 up)

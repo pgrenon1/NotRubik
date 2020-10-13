@@ -57,7 +57,7 @@ MonoBehaviour:
   cubeletPrefab: {fileID: 8122905227424608093, guid: 2804f50176e823543bb5e4cd451247ab, type: 3}
   rotationSpeed: 1
   sideRotationSpeed: 0.15
-  cubeletsParent: {fileID: 8037814265151913736}
+  cubeletsParents: {fileID: 8037814265151913736}
   debugSide: 0
 --- !u!1 &8079162183995262346
 GameObject:

@@ -22,7 +22,7 @@ public class Cubelet : MonoBehaviour
     {
         foreach (var facelet in facelets)
         {
-            var angle = Vector3.Angle(facelet.transform.forward, transform.TransformDirection(worldDirection));
+            var angle = Vector3.Angle(facelet.transform.forward, transform.parent.TransformDirection(worldDirection));
 
             if (angle < 5)
                 return facelet;
@@ -30,14 +30,4 @@ public class Cubelet : MonoBehaviour
 
         return null;
     }
-
-    //private void Update()
-    //{
-    //    var activeFacelet = GetFaceletAtWorldDirection(Util.GetAxisForSide(Cube.ActiveSide));
-
-    //    foreach (var facelet in facelets)
-    //    {
-    //        facelet.UpdateHighlightVisibility(Cube.ActiveSide != Side.None && facelet == activeFacelet);
-    //    }
-    //}
 }
