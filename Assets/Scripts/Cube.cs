@@ -10,7 +10,7 @@ using System.Collections;
 public class Cube : OdinSerializedBehaviour
 {
     public Cubelet cubeletPrefab;
-    public float rotationSpeed = 1f;
+    public float rotationDuration = 1f;
     public float sideRotationSpeed = 0.25f;
     public Transform cubeletsParents;
 
@@ -19,11 +19,14 @@ public class Cube : OdinSerializedBehaviour
 
     public List<Cubelet> AllCubelets { get; private set; } = new List<Cubelet>();
     public Dictionary<Side, List<Cubelet>> Sides { get; private set; } = new Dictionary<Side, List<Cubelet>>();
-    public GameObject ActiveSideParent { get; private set; }
+    public GameObject RotatorParent { get; private set; }
     public CubeDimensions Dimensions { get; private set; }
+    public bool IsRotatingSide { get; private set; } = false;
     public bool IsRotating { get; private set; } = false;
     public bool IsShuffling { get; private set; } = false;
-    public Side ActiveSide { get; set; } = Side.None;
+    public Side SelectedSide { get; set; } = Side.None;
+
+    private bool _lol;
 
     [BoxGroup("Debug"), Button("Group Debug Side"), PropertyOrder(1)]
     public void GroupDebugSide()
@@ -37,14 +40,14 @@ public class Cube : OdinSerializedBehaviour
 
         CreateCubelets();
 
-        ActiveSideParent = new GameObject("ActiveSideParent");
-        ActiveSideParent.transform.SetParent(cubeletsParents);
+        RotatorParent = new GameObject("SideRotator");
+        RotatorParent.transform.SetParent(cubeletsParents);
 
         GetComponentInChildren<CubeInputs>().Cube = this;
 
-        SetupSides();
+        SetupSides(false);
 
-        IsRotating = false;
+        IsRotatingSide = false;
     }
 
     private void Update()
@@ -54,16 +57,16 @@ public class Cube : OdinSerializedBehaviour
 
     private void UpdateActiveSideVisuals()
     {
-        var worldDirection = Util.GetWorldDirectionForSide(ActiveSide);
+        var worldDirection = Util.GetWorldDirectionForSide(SelectedSide);
         foreach (var cubelet in AllCubelets)
         {
-            var cubeletIsInActiveSide = Sides.Count > 1 && Sides[ActiveSide].Contains(cubelet);
+            var cubeletIsInSelectedSide = Sides.Count > 1 && Sides[SelectedSide].Contains(cubelet);
 
             foreach (var facelet in cubelet.facelets)
             {
-                var faceletIsOnActiveSide = !IsRotating &&
-                                            ActiveSide != Side.None &&
-                                            cubeletIsInActiveSide &&
+                var faceletIsOnActiveSide = !IsRotatingSide &&
+                                            SelectedSide != Side.None &&
+                                            cubeletIsInSelectedSide &&
                                             facelet == cubelet.GetFaceletAtWorldDirection(worldDirection);
                 facelet.highlight.SetActive(faceletIsOnActiveSide);
             }
@@ -72,10 +75,10 @@ public class Cube : OdinSerializedBehaviour
 
     public void RotateSide(RotationStep rotationStep)
     {
-        if (IsRotating)
+        if (IsRotatingSide)
             return;
 
-        IsRotating = true;
+        IsRotatingSide = true;
 
         GroupSide(rotationStep.side);
 
@@ -87,16 +90,16 @@ public class Cube : OdinSerializedBehaviour
         var rotation = Quaternion.Euler(axis * 90f);
         var result = transform.localRotation * rotation;
 
-        ActiveSideParent.transform.DORotateQuaternion(result, sideRotationSpeed).OnComplete(RotationCompleted);
+        RotatorParent.transform.DORotateQuaternion(result, sideRotationSpeed).OnComplete(SideRotationCompleted);
     }
 
-    private void RotationCompleted()
+    private void SideRotationCompleted()
     {
         RoundCubeletsPositions();
 
-        SetupSides();
+        SetupSides(false);
 
-        IsRotating = false;
+        IsRotatingSide = false;
     }
 
     private void RoundCubeletsPositions()
@@ -139,14 +142,14 @@ public class Cube : OdinSerializedBehaviour
 
     public void GroupSide(Side side)
     {
-        SetupSides();
+        SetupSides(false);
 
-        ActiveSide = side;
+        SelectedSide = side;
 
         ParentCubesToActiveSideParent(side);
 
 #if UNITY_EDITOR
-        Selection.activeObject = ActiveSideParent;
+        Selection.activeObject = RotatorParent;
 #endif
     }
 
@@ -161,7 +164,7 @@ public class Cube : OdinSerializedBehaviour
             {
                 foreach (var cubelet in cubelets)
                 {
-                    cubelet.transform.SetParent(ActiveSideParent.transform);
+                    cubelet.transform.SetParent(RotatorParent.transform);
                 }
             }
         }
@@ -191,7 +194,7 @@ public class Cube : OdinSerializedBehaviour
         }
     }
 
-    private void SetupSides()
+    private void SetupSides(bool worldSides)
     {
         ClearActiveSideParent();
 
@@ -206,63 +209,89 @@ public class Cube : OdinSerializedBehaviour
         var frontZ = float.MinValue;
         var backZ = float.MaxValue;
 
-        foreach (var cube in AllCubelets)
+        foreach (var cubelet in AllCubelets)
         {
+            Vector3 position;
+            if (worldSides)
+                position = cubelet.transform.position;
+            else
+                position = cubelet.transform.localPosition;
+
             // greatest x
-            if (cube.transform.localPosition.x > leftX)
-                leftX = cube.transform.localPosition.x;
+            if (position.x > leftX)
+                leftX = position.x;
             // smallest x
-            if (cube.transform.localPosition.x < rightX)
-                rightX = cube.transform.localPosition.x;
+            if (position.x < rightX)
+                rightX = position.x;
 
             // greatest y 
-            if (cube.transform.localPosition.y > upY)
-                upY = cube.transform.localPosition.y;
+            if (position.y > upY)
+                upY = position.y;
             // smallest y 
-            if (cube.transform.localPosition.y < downY)
-                downY = cube.transform.localPosition.y;
+            if (position.y < downY)
+                downY = position.y;
 
             // greatest z
-            if (cube.transform.localPosition.y > frontZ)
-                frontZ = cube.transform.localPosition.z;
+            if (position.y > frontZ)
+                frontZ = position.z;
             // smallest z 
-            if (cube.transform.localPosition.y < backZ)
-                backZ = cube.transform.localPosition.z;
+            if (position.y < backZ)
+                backZ = position.z;
         }
 
         foreach (var cubelet in AllCubelets)
         {
-            if (Mathf.Abs(cubelet.transform.localPosition.y - upY) < 0.01f)
+            Vector3 position;
+            if (worldSides)
+                position = cubelet.transform.position;
+            else
+                position = cubelet.transform.localPosition;
+
+            if (Mathf.Abs(position.y - upY) < 0.01f)
             {
                 Sides[Side.Up].Add(cubelet);
             }
 
-            if (Mathf.Abs(cubelet.transform.localPosition.y - downY) < 0.01f)
+            if (Mathf.Abs(position.y - downY) < 0.01f)
             {
                 Sides[Side.Down].Add(cubelet);
             }
 
-            if (Mathf.Abs(cubelet.transform.localPosition.x - leftX) < 0.01f)
+            if (Mathf.Abs(position.x - leftX) < 0.01f)
             {
                 Sides[Side.Left].Add(cubelet);
             }
 
-            if (Mathf.Abs(cubelet.transform.localPosition.x - rightX) < 0.01f)
+            if (Mathf.Abs(position.x - rightX) < 0.01f)
             {
                 Sides[Side.Right].Add(cubelet);
             }
 
-            if (Mathf.Abs(cubelet.transform.localPosition.z - frontZ) < 0.01f)
+            if (Mathf.Abs(position.z - frontZ) < 0.01f)
             {
                 Sides[Side.Front].Add(cubelet);
             }
 
-            if (Mathf.Abs(cubelet.transform.localPosition.z - backZ) < 0.01f)
+            if (Mathf.Abs(position.z - backZ) < 0.01f)
             {
                 Sides[Side.Back].Add(cubelet);
             }
         }
     }
+
+    private void SelectSide(Side sideToSelect)
+    {
+        SetupSides(true);
+
+        SelectedSide = sideToSelect;
+
+        //SelectedSide = GetWorldSide(sideToSelect);
+    }
+
+    //private Side GetWorldSide(Side sideToSelect)
+    //{
+
+    //}
 
     private void ClearActiveSideParent()
     {
@@ -271,7 +300,7 @@ public class Cube : OdinSerializedBehaviour
             cube.transform.SetParent(cubeletsParents);
         }
 
-        ActiveSideParent.transform.localRotation = Quaternion.identity;
+        RotatorParent.transform.localRotation = Quaternion.identity;
     }
 
     private void ClearSides()
@@ -296,7 +325,7 @@ public class Cube : OdinSerializedBehaviour
 
     public void Solve()
     {
-
+        _lol = true;
     }
 
     private IEnumerator DoShuffle(int numberOfSteps)
@@ -307,10 +336,39 @@ public class Cube : OdinSerializedBehaviour
         {
             RotateSide(new RotationStep(sides.RandomElement(), UnityEngine.Random.Range(0f, 100f) > 50f));
 
-            yield return new WaitWhile(() => IsRotating);
+            yield return new WaitWhile(() => IsRotatingSide);
         }
 
         IsShuffling = false;
+    }
+
+    public void MoveSelection(Vector2 direction)
+    {
+            
+    }
+
+    public void Rotate(Quaternion rotation)
+    {
+        var result = transform.localRotation * rotation;
+
+        RotateTo(result);
+    }
+
+    public void RotateTo(Quaternion targetRotation)
+    {
+        if (IsRotating)
+            return;
+
+        IsRotating = true;
+
+        transform.DORotateQuaternion(targetRotation, rotationDuration).OnComplete(CubeRotationCompleted);
+    }
+
+    private void CubeRotationCompleted()
+    {
+        IsRotating = false;
+
+        SetupSides(true);
     }
 
     private void OnGUI()
@@ -320,9 +378,104 @@ public class Cube : OdinSerializedBehaviour
             Shuffle(10);
         }
 
-        if (GUILayout.Button("Solve"))
+        if (!_lol)
         {
-            Solve();
+            if (GUILayout.Button("Solve"))
+            {
+                Solve();
+            }
         }
+        else
+        {
+            if (GUILayout.Button("lol"))
+            {
+                Debug.Log("nope");
+            }
+        }
+
+        GUILayout.BeginVertical();
+        {
+            GUILayout.BeginHorizontal();
+            {
+                if (GUILayout.Button("X+"))
+                {
+                    Rotate(Quaternion.AngleAxis(90f, Vector3.right));
+                }
+                if (GUILayout.Button("X-"))
+                {
+                    Rotate(Quaternion.AngleAxis(90f, Vector3.left));
+                }
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            {
+                if (GUILayout.Button("Y+"))
+                {
+                    Rotate(Quaternion.AngleAxis(90f, Vector3.up));
+                }
+                if (GUILayout.Button("Y-"))
+                {
+                    Rotate(Quaternion.AngleAxis(90f, Vector3.down));
+                }
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            {
+                if (GUILayout.Button("Z+"))
+                {
+                    Rotate(Quaternion.AngleAxis(90f, Vector3.forward));
+                }
+                if (GUILayout.Button("Z-"))
+                {
+                    Rotate(Quaternion.AngleAxis(90f, Vector3.back));
+                }
+            }
+            GUILayout.EndHorizontal();
+
+            if (GUILayout.Button("Rotate To Origin")) 
+            {
+                RotateTo(Quaternion.identity);
+            }
+        }
+        GUILayout.EndVertical();
+
+        GUILayout.BeginVertical();
+        {
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Select Front"))
+            {
+                SelectSide(Side.Front);
+            }
+            if (GUILayout.Button("Select Back"))
+            {
+                SelectSide(Side.Back);
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Select Up"))
+            {
+                SelectSide(Side.Up);
+            }
+            if (GUILayout.Button("Select Down"))
+            {
+                SelectSide(Side.Down);
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Select Right"))
+            {
+                SelectSide(Side.Right);
+            }
+            if (GUILayout.Button("Select Left"))
+            {
+                SelectSide(Side.Left);
+            }
+            GUILayout.EndHorizontal();
+        }
+        GUILayout.EndVertical();
     }
 }

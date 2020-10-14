@@ -35,34 +35,10 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Up"",
-                    ""type"": ""Button"",
-                    ""id"": ""00249e63-8dea-4fab-af3e-ad492c8ccce8"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Down"",
-                    ""type"": ""Button"",
-                    ""id"": ""f50e0f7d-bdef-42a1-a854-1e273fc864e2"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Left"",
-                    ""type"": ""Button"",
-                    ""id"": ""6108224c-5edc-44b6-bf18-fc2a2f001a83"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Right"",
-                    ""type"": ""Button"",
-                    ""id"": ""af61a7db-e026-4702-9f61-243cee00ef89"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Move"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""9881f8eb-01f9-487c-8956-99c9e85064f5"",
+                    ""expectedControlType"": ""Dpad"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -92,91 +68,69 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""48dd5a98-38d7-4f38-923b-8ffee88becb7"",
+                    ""id"": ""a903ce63-bef4-420d-aec7-a93475b056d6"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""ASDW"",
+                    ""id"": ""b4397c98-ef04-4059-8a67-782d72065458"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""eecc36c3-1d11-437f-9d55-49474cf14982"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Up"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""566a0bc9-a0e2-4478-9e00-1b018df0132f"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Up"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2e04a598-610b-419e-8449-d61fd2a9f61a"",
+                    ""name"": ""down"",
+                    ""id"": ""2cb82886-54f4-47b6-8d78-5e2aef7af410"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Down"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""8ab659da-552c-45a7-81c8-f160046764ee"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Down"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""11cbcc22-f4ce-4575-9d9e-1aad2fb476d0"",
+                    ""name"": ""left"",
+                    ""id"": ""cdc848ba-947f-426b-b091-6c48ca436580"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Left"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""8d4c4c9f-e4cd-4bd2-a39a-fbf0d420f73b"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Left"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""beb3cdf6-4409-437b-ba7a-8956cfe22f10"",
+                    ""name"": ""right"",
+                    ""id"": ""29369f6d-faac-49a7-b114-3be692022796"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Right"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2c1b9e35-f507-4e7b-bf8b-ee8dffea1c43"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Right"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -188,6 +142,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""Shuffle"",
                     ""type"": ""Button"",
                     ""id"": ""b300db09-fdcd-4ee4-876d-91ba57d97f92"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""CycleSelection"",
+                    ""type"": ""Button"",
+                    ""id"": ""183dd5f0-aad9-4d4f-85ac-c0d24b471ffd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -204,6 +166,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Shuffle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""44c635a0-c339-4286-972d-f642be8095a2"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleSelection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -214,13 +187,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
         m_PlayerActions_Press = m_PlayerActions.FindAction("Press", throwIfNotFound: true);
         m_PlayerActions_MousePosition = m_PlayerActions.FindAction("MousePosition", throwIfNotFound: true);
-        m_PlayerActions_Up = m_PlayerActions.FindAction("Up", throwIfNotFound: true);
-        m_PlayerActions_Down = m_PlayerActions.FindAction("Down", throwIfNotFound: true);
-        m_PlayerActions_Left = m_PlayerActions.FindAction("Left", throwIfNotFound: true);
-        m_PlayerActions_Right = m_PlayerActions.FindAction("Right", throwIfNotFound: true);
+        m_PlayerActions_Move = m_PlayerActions.FindAction("Move", throwIfNotFound: true);
         // CheatActions
         m_CheatActions = asset.FindActionMap("CheatActions", throwIfNotFound: true);
         m_CheatActions_Shuffle = m_CheatActions.FindAction("Shuffle", throwIfNotFound: true);
+        m_CheatActions_CycleSelection = m_CheatActions.FindAction("CycleSelection", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -272,20 +243,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private IPlayerActionsActions m_PlayerActionsActionsCallbackInterface;
     private readonly InputAction m_PlayerActions_Press;
     private readonly InputAction m_PlayerActions_MousePosition;
-    private readonly InputAction m_PlayerActions_Up;
-    private readonly InputAction m_PlayerActions_Down;
-    private readonly InputAction m_PlayerActions_Left;
-    private readonly InputAction m_PlayerActions_Right;
+    private readonly InputAction m_PlayerActions_Move;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerActionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Press => m_Wrapper.m_PlayerActions_Press;
         public InputAction @MousePosition => m_Wrapper.m_PlayerActions_MousePosition;
-        public InputAction @Up => m_Wrapper.m_PlayerActions_Up;
-        public InputAction @Down => m_Wrapper.m_PlayerActions_Down;
-        public InputAction @Left => m_Wrapper.m_PlayerActions_Left;
-        public InputAction @Right => m_Wrapper.m_PlayerActions_Right;
+        public InputAction @Move => m_Wrapper.m_PlayerActions_Move;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -301,18 +266,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @MousePosition.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnMousePosition;
-                @Up.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnUp;
-                @Up.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnUp;
-                @Up.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnUp;
-                @Down.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDown;
-                @Down.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDown;
-                @Down.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDown;
-                @Left.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnLeft;
-                @Left.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnLeft;
-                @Left.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnLeft;
-                @Right.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRight;
-                @Right.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRight;
-                @Right.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRight;
+                @Move.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnMove;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -323,18 +279,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
-                @Up.started += instance.OnUp;
-                @Up.performed += instance.OnUp;
-                @Up.canceled += instance.OnUp;
-                @Down.started += instance.OnDown;
-                @Down.performed += instance.OnDown;
-                @Down.canceled += instance.OnDown;
-                @Left.started += instance.OnLeft;
-                @Left.performed += instance.OnLeft;
-                @Left.canceled += instance.OnLeft;
-                @Right.started += instance.OnRight;
-                @Right.performed += instance.OnRight;
-                @Right.canceled += instance.OnRight;
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
             }
         }
     }
@@ -344,11 +291,13 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_CheatActions;
     private ICheatActionsActions m_CheatActionsActionsCallbackInterface;
     private readonly InputAction m_CheatActions_Shuffle;
+    private readonly InputAction m_CheatActions_CycleSelection;
     public struct CheatActionsActions
     {
         private @PlayerControls m_Wrapper;
         public CheatActionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shuffle => m_Wrapper.m_CheatActions_Shuffle;
+        public InputAction @CycleSelection => m_Wrapper.m_CheatActions_CycleSelection;
         public InputActionMap Get() { return m_Wrapper.m_CheatActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -361,6 +310,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Shuffle.started -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnShuffle;
                 @Shuffle.performed -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnShuffle;
                 @Shuffle.canceled -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnShuffle;
+                @CycleSelection.started -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnCycleSelection;
+                @CycleSelection.performed -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnCycleSelection;
+                @CycleSelection.canceled -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnCycleSelection;
             }
             m_Wrapper.m_CheatActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -368,6 +320,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Shuffle.started += instance.OnShuffle;
                 @Shuffle.performed += instance.OnShuffle;
                 @Shuffle.canceled += instance.OnShuffle;
+                @CycleSelection.started += instance.OnCycleSelection;
+                @CycleSelection.performed += instance.OnCycleSelection;
+                @CycleSelection.canceled += instance.OnCycleSelection;
             }
         }
     }
@@ -376,13 +331,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnPress(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
-        void OnUp(InputAction.CallbackContext context);
-        void OnDown(InputAction.CallbackContext context);
-        void OnLeft(InputAction.CallbackContext context);
-        void OnRight(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
     }
     public interface ICheatActionsActions
     {
         void OnShuffle(InputAction.CallbackContext context);
+        void OnCycleSelection(InputAction.CallbackContext context);
     }
 }
