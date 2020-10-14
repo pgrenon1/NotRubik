@@ -22,7 +22,10 @@ public class Cubelet : MonoBehaviour
     {
         foreach (var facelet in facelets)
         {
-            var angle = Vector3.Angle(facelet.transform.forward, transform.parent.TransformDirection(worldDirection));
+            // -forward because for some reason the quads of the facelets are visible only from their back, not the forward???
+            Vector3 forward = -facelet.transform.forward;
+
+            var angle = Vector3.Angle(forward, worldDirection);
 
             if (angle < 5)
                 return facelet;

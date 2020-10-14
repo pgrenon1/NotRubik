@@ -58,6 +58,8 @@ public class Cube : OdinSerializedBehaviour
     private void UpdateActiveSideVisuals()
     {
         var worldDirection = Util.GetWorldDirectionForSide(SelectedSide);
+        Debug.Log(worldDirection);
+        Debug.DrawRay(transform.position, worldDirection * 3f, Color.red, 1f);
         foreach (var cubelet in AllCubelets)
         {
             var cubeletIsInSelectedSide = Sides.Count > 1 && Sides[SelectedSide].Contains(cubelet);
@@ -142,7 +144,7 @@ public class Cube : OdinSerializedBehaviour
 
     public void GroupSide(Side side)
     {
-        SetupSides(false);
+        SetupSides(true);
 
         SelectedSide = side;
 
@@ -349,7 +351,7 @@ public class Cube : OdinSerializedBehaviour
 
     public void Rotate(Quaternion rotation)
     {
-        var result = transform.localRotation * rotation;
+        var result = cubeletsParents.localRotation * rotation;
 
         RotateTo(result);
     }
@@ -361,14 +363,14 @@ public class Cube : OdinSerializedBehaviour
 
         IsRotating = true;
 
-        transform.DORotateQuaternion(targetRotation, rotationDuration).OnComplete(CubeRotationCompleted);
+        cubeletsParents.DORotateQuaternion(targetRotation, rotationDuration).OnComplete(CubeRotationCompleted);
     }
 
     private void CubeRotationCompleted()
     {
-        IsRotating = false;
-
         SetupSides(true);
+
+        IsRotating = false;
     }
 
     private void OnGUI()

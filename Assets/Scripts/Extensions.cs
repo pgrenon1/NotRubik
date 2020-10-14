@@ -43,17 +43,17 @@ public static class Util
         switch (side)
         {
             case Side.Back:
-                return Vector3.forward;
-            case Side.Front:
                 return Vector3.back;
+            case Side.Front:
+                return Vector3.forward;
             case Side.Right:
-                return Vector3.right;
-            case Side.Left:
                 return Vector3.left;
+            case Side.Left:
+                return Vector3.right;
             case Side.Up:
-                return Vector3.down;
-            case Side.Down:
                 return Vector3.up;
+            case Side.Down:
+                return Vector3.down;
             default:
                 return Vector3.zero;
         }
