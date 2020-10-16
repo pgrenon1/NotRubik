@@ -14,6 +14,7 @@ public class Cube : OdinSerializedBehaviour
     public float rotationDuration = 1f;
     public float sideRotationSpeed = 0.25f;
     public Transform cubeletsParents;
+    public bool showRotationStepInputsOnSelectedOnly = true;
 
     [BoxGroup("Debug"), PropertyOrder(1)]
     public Side debugSide;
@@ -25,6 +26,7 @@ public class Cube : OdinSerializedBehaviour
     public bool IsRotatingSide { get; private set; } = false;
     public bool IsRotating { get; private set; } = false;
     public bool IsShuffling { get; private set; } = false;
+
     public Side SelectedSide { get; set; } = Side.None;
 
     private bool _lol;
@@ -77,6 +79,11 @@ public class Cube : OdinSerializedBehaviour
                 facelet.highlight.SetActive(faceletIsOnActiveSide);
             }
         }
+    }
+
+    public void RotateSelectedSide(bool clockwise)
+    {
+        RotateSide(new RotationStep(SelectedSide, clockwise));
     }
 
     public void RotateSide(RotationStep rotationStep)
@@ -323,7 +330,14 @@ public class Cube : OdinSerializedBehaviour
 
     public void MoveSelection(Vector2 direction)
     {
-        
+        if (direction == Vector2.left)
+            SelectedSide = Side.Left;
+        else if (direction == Vector2.right)
+            SelectedSide = Side.Front;
+        else if (direction == Vector2.up)
+            SelectedSide = Side.Up;
+        else if (direction == Vector2.down && SelectedSide == Side.Up)
+            SelectedSide = Side.Left;
     }
 
     public void RotateTo(Quaternion targetRotation)

@@ -23,10 +23,19 @@ public class CubeInputs : MonoBehaviour
         PlayerControls.CheatActions.CycleSelection.performed += ctx => CycleSelection();
 
         PlayerControls.PlayerActions.Move.performed += ctx => MoveSelection(PlayerControls.PlayerActions.Move.ReadValue<Vector2>());
+        PlayerControls.PlayerActions.RotateSideClockwise.performed += ctx => RotateSelectedSide(true);
+        PlayerControls.PlayerActions.RotateSideCounterclockwise.performed += ctx => RotateSelectedSide(false);
+    }
+
+    private void RotateSelectedSide(bool clockwise)
+    {
+        Cube.RotateSelectedSide(clockwise);
     }
 
     private void MoveSelection(Vector2 direction)
     {
+        if (direction != Vector2.zero)
+            Cube.MoveSelection(direction);
     }
 
     private void Shuffle()

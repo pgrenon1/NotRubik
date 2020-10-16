@@ -13,6 +13,8 @@ public class RotationInput : MonoBehaviour
     public MeshRenderer meshRenderer;
     public RotationStep rotationStep;
 
+    public Cube Cube { get; private set; }
+
     private bool _isHovered = true;
     public bool IsHovered
     {
@@ -31,9 +33,28 @@ public class RotationInput : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Cube = GetComponentInParent<Cube>();
+    }
+
     private void Update()
     {
+        UpdateVisibility();
+
         UpdateIsHovered();
+    }
+
+    private void UpdateVisibility()
+    {
+        var visible = true;
+
+        if (Cube.showRotationStepInputsOnSelectedOnly)
+        {
+            visible = Cube.SelectedSide == rotationStep.side;
+        }
+
+        meshRenderer.gameObject.SetActive(visible);
     }
 
     private void UpdateIsHovered()

@@ -41,6 +41,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Dpad"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""RotateSideClockwise"",
+                    ""type"": ""Button"",
+                    ""id"": ""871dfb53-321b-4f59-819b-1cf8515a41ba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""RotateSideCounterclockwise"",
+                    ""type"": ""Button"",
+                    ""id"": ""412b49e7-a8f2-4f45-8825-e735961ae94b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -131,6 +147,50 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eed6729a-34b2-4ce7-a21f-870bb70979d2"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateSideClockwise"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f22a8998-d486-4525-85f2-027326df0a88"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateSideClockwise"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4ff2fcbe-b1be-4aa2-9de3-a91ab18493c3"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateSideCounterclockwise"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fec0cc7d-1eeb-4a1a-a8fb-e70f98c7fd18"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateSideCounterclockwise"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -188,6 +248,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlayerActions_Press = m_PlayerActions.FindAction("Press", throwIfNotFound: true);
         m_PlayerActions_MousePosition = m_PlayerActions.FindAction("MousePosition", throwIfNotFound: true);
         m_PlayerActions_Move = m_PlayerActions.FindAction("Move", throwIfNotFound: true);
+        m_PlayerActions_RotateSideClockwise = m_PlayerActions.FindAction("RotateSideClockwise", throwIfNotFound: true);
+        m_PlayerActions_RotateSideCounterclockwise = m_PlayerActions.FindAction("RotateSideCounterclockwise", throwIfNotFound: true);
         // CheatActions
         m_CheatActions = asset.FindActionMap("CheatActions", throwIfNotFound: true);
         m_CheatActions_Shuffle = m_CheatActions.FindAction("Shuffle", throwIfNotFound: true);
@@ -244,6 +306,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerActions_Press;
     private readonly InputAction m_PlayerActions_MousePosition;
     private readonly InputAction m_PlayerActions_Move;
+    private readonly InputAction m_PlayerActions_RotateSideClockwise;
+    private readonly InputAction m_PlayerActions_RotateSideCounterclockwise;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -251,6 +315,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Press => m_Wrapper.m_PlayerActions_Press;
         public InputAction @MousePosition => m_Wrapper.m_PlayerActions_MousePosition;
         public InputAction @Move => m_Wrapper.m_PlayerActions_Move;
+        public InputAction @RotateSideClockwise => m_Wrapper.m_PlayerActions_RotateSideClockwise;
+        public InputAction @RotateSideCounterclockwise => m_Wrapper.m_PlayerActions_RotateSideCounterclockwise;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -269,6 +335,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnMove;
+                @RotateSideClockwise.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRotateSideClockwise;
+                @RotateSideClockwise.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRotateSideClockwise;
+                @RotateSideClockwise.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRotateSideClockwise;
+                @RotateSideCounterclockwise.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRotateSideCounterclockwise;
+                @RotateSideCounterclockwise.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRotateSideCounterclockwise;
+                @RotateSideCounterclockwise.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRotateSideCounterclockwise;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -282,6 +354,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @RotateSideClockwise.started += instance.OnRotateSideClockwise;
+                @RotateSideClockwise.performed += instance.OnRotateSideClockwise;
+                @RotateSideClockwise.canceled += instance.OnRotateSideClockwise;
+                @RotateSideCounterclockwise.started += instance.OnRotateSideCounterclockwise;
+                @RotateSideCounterclockwise.performed += instance.OnRotateSideCounterclockwise;
+                @RotateSideCounterclockwise.canceled += instance.OnRotateSideCounterclockwise;
             }
         }
     }
@@ -332,6 +410,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnPress(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnRotateSideClockwise(InputAction.CallbackContext context);
+        void OnRotateSideCounterclockwise(InputAction.CallbackContext context);
     }
     public interface ICheatActionsActions
     {

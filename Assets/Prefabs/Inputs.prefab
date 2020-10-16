@@ -60,9 +60,17 @@ PrefabInstance:
       propertyPath: rotationStep.clockwise
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 270561569909492002, guid: fea5d7d924c226b4587260838f115768, type: 3}
+      propertyPath: rotationStep.side
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 520050799458641449, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: rotationStep.clockwise
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 520050799458641449, guid: fea5d7d924c226b4587260838f115768, type: 3}
+      propertyPath: rotationStep.side
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4689095471154308293, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: m_LocalPosition.x
@@ -132,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 270561569909492002, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: rotationStep.side
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 270561569909492002, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: clockwise
@@ -152,7 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 520050799458641449, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: rotationStep.side
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4689095471154308293, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: m_LocalPosition.x
@@ -222,7 +230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 270561569909492002, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: rotationStep.side
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 270561569909492002, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: clockwise
@@ -242,7 +250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 520050799458641449, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: rotationStep.side
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4689095471154308293, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: m_LocalPosition.x
@@ -312,7 +320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 270561569909492002, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: rotationStep.side
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 270561569909492002, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: rotationStep.clockwise
@@ -332,7 +340,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 520050799458641449, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: rotationStep.side
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4689095471154308293, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: m_LocalPosition.x
@@ -402,7 +410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 270561569909492002, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: rotationStep.side
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 270561569909492002, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: clockwise
@@ -422,7 +430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 520050799458641449, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: rotationStep.side
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4689095471154308293, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: m_LocalPosition.x
@@ -492,7 +500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 270561569909492002, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: rotationStep.side
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 270561569909492002, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: clockwise
@@ -512,7 +520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 520050799458641449, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: rotationStep.side
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4689095471154308293, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: m_LocalPosition.x
