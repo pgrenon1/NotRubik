@@ -118,7 +118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4689095471154308294, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: m_Name
-      value: RotationInput_Front
+      value: SideRotation_Front
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fea5d7d924c226b4587260838f115768, type: 3}
@@ -208,7 +208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4689095471154308294, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: m_Name
-      value: RotationInput_Down
+      value: SideRotation_Down
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fea5d7d924c226b4587260838f115768, type: 3}
@@ -298,7 +298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4689095471154308294, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: m_Name
-      value: RotationInput_Right
+      value: SideRotation_Right
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fea5d7d924c226b4587260838f115768, type: 3}
@@ -388,7 +388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4689095471154308294, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: m_Name
-      value: RotationInput_Up
+      value: SideRotation_Up
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fea5d7d924c226b4587260838f115768, type: 3}
@@ -478,7 +478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4689095471154308294, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: m_Name
-      value: RotationInput_Left
+      value: SideRotation_Left
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fea5d7d924c226b4587260838f115768, type: 3}
@@ -568,7 +568,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4689095471154308294, guid: fea5d7d924c226b4587260838f115768, type: 3}
       propertyPath: m_Name
-      value: RotationInput_Back
+      value: SideRotation_Back
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fea5d7d924c226b4587260838f115768, type: 3}

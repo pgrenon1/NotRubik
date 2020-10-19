@@ -32,7 +32,7 @@ public static class Util
         return Side.Back;
     }
 
-    public static char GetLetterForSide(RotationStep step)
+    public static char GetLetterForSide(SideRotation step)
     {
         return Enum.GetName(typeof(Side), step.side)[0];
     }
@@ -76,7 +76,7 @@ public static class Util
         }
     }
 
-    public static Vector3 GetAxisForRotationStep(RotationStep rotationStep)
+    public static Vector3 GetAxisForRotationStep(SideRotation rotationStep)
     {
         var axis = GetAbsoluteAxisForSide(rotationStep.side);
 

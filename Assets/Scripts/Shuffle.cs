@@ -1,6 +1,5 @@
 ﻿using Sirenix.OdinInspector;
 using Sirenix.Utilities;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -10,7 +9,7 @@ using UnityEngine;
 public class Shuffle : ScriptableObject
 {
     [InlineButton("UpdateSteps")]
-    public List<RotationStep> rotationSteps = new List<RotationStep>();
+    public List<SideRotation> rotationSteps = new List<SideRotation>();
 
     [InlineButton("UpdateStepsText")]
     public string stepsText;
@@ -19,7 +18,7 @@ public class Shuffle : ScriptableObject
     {
         var stepTexts = stepsText.Split(' ');
 
-        rotationSteps = new List<RotationStep>();
+        rotationSteps = new List<SideRotation>();
         foreach (var stepText in stepTexts)
         {
             if (stepText.IsNullOrWhitespace())
@@ -27,7 +26,7 @@ public class Shuffle : ScriptableObject
 
             var clockwise = !stepText.Contains("'");
             var letter = stepText.Replace("'", "")[0];
-            rotationSteps.Add(new RotationStep(Util.GetSideFromChar(letter), clockwise));
+            rotationSteps.Add(new SideRotation(Util.GetSideFromChar(letter), clockwise));
         }
 
         EditorUtility.SetDirty(this);
@@ -47,23 +46,5 @@ public class Shuffle : ScriptableObject
 
         EditorUtility.SetDirty(this);
         AssetDatabase.SaveAssets();
-    }
-}
-
-[Serializable]
-public class RotationStep
-{
-    public Side side;
-    public bool clockwise;
-    public RotationStep(Side side, bool clockwise)
-    {
-        this.side = side;
-        this.clockwise = clockwise;
-    }
-
-    public override string ToString()
-    {
-        var clockwiseString = clockwise ? "" : "'";
-        return Util.GetLetterForSide(this).ToString() + clockwiseString;
     }
 }

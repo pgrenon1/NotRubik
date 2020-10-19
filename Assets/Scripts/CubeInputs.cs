@@ -45,12 +45,12 @@ public class CubeInputs : MonoBehaviour
 
     private void CycleSelection()
     {
-        if (LevelManager.Instance.CurrentCube.SelectedSide == Side.Right)
-            LevelManager.Instance.CurrentCube.SelectedSide = Side.None;
+        if (Cube.SelectedSide == Side.Right)
+            Cube.SelectedSide = Side.None;
         else
-            LevelManager.Instance.CurrentCube.SelectedSide = LevelManager.Instance.CurrentCube.SelectedSide + 1;
+            Cube.SelectedSide = Cube.SelectedSide + 1;
 
-        Debug.Log(LevelManager.Instance.CurrentCube.SelectedSide);
+        Debug.Log(Cube.SelectedSide);
     }
 
     private void PointerPress()
@@ -62,7 +62,7 @@ public class CubeInputs : MonoBehaviour
             RotationInput rotationInput = hitInfo.collider.GetComponentInParent<RotationInput>();
             if (rotationInput != null)
             {
-                LevelManager.Instance.CurrentCube.RotateSide(rotationInput.rotationStep);
+                rotationInput.rotationStep.Execute(Cube);
             }
         }
     }

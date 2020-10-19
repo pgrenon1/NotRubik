@@ -15,6 +15,7 @@ public class Cube : OdinSerializedBehaviour
     public float sideRotationSpeed = 0.25f;
     public Transform cubeletsParents;
     public bool showRotationStepInputsOnSelectedOnly = true;
+    public int numberOfRecordedManipulations = 10;
 
     [BoxGroup("Debug"), PropertyOrder(1)]
     public Side debugSide;
@@ -26,6 +27,7 @@ public class Cube : OdinSerializedBehaviour
     public bool IsRotatingSide { get; private set; } = false;
     public bool IsRotating { get; private set; } = false;
     public bool IsShuffling { get; private set; } = false;
+    public List<Manipulation> Manipulations { get; private set; } = new List<Manipulation>();
 
     public Side SelectedSide { get; set; } = Side.None;
 
@@ -83,10 +85,10 @@ public class Cube : OdinSerializedBehaviour
 
     public void RotateSelectedSide(bool clockwise)
     {
-        RotateSide(new RotationStep(SelectedSide, clockwise));
+        RotateSide(new SideRotation(SelectedSide, clockwise));
     }
 
-    public void RotateSide(RotationStep rotationStep)
+    public void RotateSide(SideRotation rotationStep)
     {
         if (IsRotatingSide)
             return;
@@ -320,7 +322,7 @@ public class Cube : OdinSerializedBehaviour
 
         for (int i = 0; i < numberOfSteps; i++)
         {
-            RotateSide(new RotationStep(sides.RandomElement(), UnityEngine.Random.Range(0f, 100f) > 50f));
+            RotateSide(new SideRotation(sides.RandomElement(), UnityEngine.Random.Range(0f, 100f) > 50f));
 
             yield return new WaitWhile(() => IsRotatingSide);
         }
@@ -342,6 +344,11 @@ public class Cube : OdinSerializedBehaviour
 
     public void RotateTo(Quaternion targetRotation)
     {
+        if (IsRotating)
+            return;
+
+        IsRotating = true;
+
         cubeletsParents.DORotateQuaternion(targetRotation, rotationDuration).OnComplete(CubeRotationCompleted);
     }
 
@@ -403,11 +410,13 @@ public class Cube : OdinSerializedBehaviour
             {
                 if (GUILayout.Button("X+"))
                 {
-                    RotateBy(Vector3.right * 90f);
+                    var rotation = new CubeRotation(Vector3.right * 90f);
+                    rotation.Execute(this);
                 }
                 if (GUILayout.Button("X-"))
                 {
-                    RotateBy(Vector3.left * 90f);
+                    var rotation = new CubeRotation(Vector3.left * 90f);
+                    rotation.Execute(this);
                 }
             }
             GUILayout.EndHorizontal();
@@ -416,11 +425,13 @@ public class Cube : OdinSerializedBehaviour
             {
                 if (GUILayout.Button("Y+"))
                 {
-                    RotateBy(Vector3.up * 90f);
+                    var rotation = new CubeRotation(Vector3.up * 90f);
+                    rotation.Execute(this);
                 }
                 if (GUILayout.Button("Y-"))
                 {
-                    RotateBy(Vector3.down * 90f);
+                    var rotation = new CubeRotation(Vector3.down * 90f);
+                    rotation.Execute(this);
                 }
             }
             GUILayout.EndHorizontal();
@@ -429,11 +440,13 @@ public class Cube : OdinSerializedBehaviour
             {
                 if (GUILayout.Button("Z+"))
                 {
-                    RotateBy(Vector3.forward * 90f);
+                    var rotation = new CubeRotation(Vector3.forward * 90f);
+                    rotation.Execute(this);
                 }
                 if (GUILayout.Button("Z-"))
                 {
-                    RotateBy(Vector3.back * 90f);
+                    var rotation = new CubeRotation(Vector3.back * 90f);
+                    rotation.Execute(this);
                 }
             }
             GUILayout.EndHorizontal();
@@ -481,5 +494,21 @@ public class Cube : OdinSerializedBehaviour
             GUILayout.EndHorizontal();
         }
         GUILayout.EndVertical();
+    }
+
+    public void Undo()
+    {
+        var lastManipulation = Manipulations[Manipulations.Count - 1];
+        lastManipulation.Undo(this);
+
+        Manipulations.Remove(lastManipulation);
+    }
+
+    public void RecordManipulation(Manipulation manipulation)
+    {
+        if (Manipulations.Count >= numberOfRecordedManipulations)
+            Manipulations.RemoveAt(0);
+
+        Manipulations.Add(manipulation);
     }
 }

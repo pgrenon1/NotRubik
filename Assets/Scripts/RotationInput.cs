@@ -11,7 +11,7 @@ public class RotationInput : MonoBehaviour
     public Color hoveredColor;
     public Color normalColor;
     public MeshRenderer meshRenderer;
-    public RotationStep rotationStep;
+    public SideRotation rotationStep;
 
     public Cube Cube { get; private set; }
 
