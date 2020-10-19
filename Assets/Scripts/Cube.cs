@@ -28,6 +28,7 @@ public class Cube : OdinSerializedBehaviour
     public bool IsRotating { get; private set; } = false;
     public bool IsShuffling { get; private set; } = false;
     public List<Manipulation> Manipulations { get; private set; } = new List<Manipulation>();
+    public Graph Graph { get; private set; }
 
     public Side SelectedSide { get; set; } = Side.None;
 
@@ -52,6 +53,9 @@ public class Cube : OdinSerializedBehaviour
 
         SetupSides();
 
+        Graph = GetComponent<Graph>();
+        Graph.Init(this);
+
         IsRotatingSide = false;
     }
 
@@ -62,7 +66,7 @@ public class Cube : OdinSerializedBehaviour
 
     private void UpdateActiveSideVisuals()
     {
-        var worldDirection = Util.GetWorldDirectionForSide(SelectedSide);
+        var worldDirection = Utils.GetWorldDirectionForSide(SelectedSide);
 
         foreach (var cubelet in AllCubelets)
         {
@@ -97,7 +101,7 @@ public class Cube : OdinSerializedBehaviour
 
         GroupSide(rotationStep.side);
 
-        var axis = Util.GetAxisForRotationStep(rotationStep);
+        var axis = Utils.GetAxisForRotationStep(rotationStep);
         RotateSelectedSide(axis);
     }
 

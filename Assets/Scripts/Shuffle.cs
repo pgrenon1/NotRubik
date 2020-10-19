@@ -26,7 +26,8 @@ public class Shuffle : ScriptableObject
 
             var clockwise = !stepText.Contains("'");
             var letter = stepText.Replace("'", "")[0];
-            rotationSteps.Add(new SideRotation(Util.GetSideFromChar(letter), clockwise));
+            rotationSteps.Add(new SideRotation(Utils.GetSideFromChar(letter), clockwise));
+
         }
 
         EditorUtility.SetDirty(this);
@@ -39,7 +40,7 @@ public class Shuffle : ScriptableObject
 
         foreach (var step in rotationSteps)
         {
-            var letter = Util.GetLetterForSide(step);
+            var letter = Utils.GetLetterForSide(step);
             var sign = step.clockwise ? "" : "'";
             stepsText += letter + sign + " ";
         }

@@ -15,7 +15,7 @@ public class SideRotation : Manipulation
     public override string ToString()
     {
         var clockwiseString = clockwise ? "" : "'";
-        return Util.GetLetterForSide(this).ToString() + clockwiseString;
+        return Utils.GetLetterForSide(this).ToString() + clockwiseString;
     }
 
     public override void Execute(Cube cube)

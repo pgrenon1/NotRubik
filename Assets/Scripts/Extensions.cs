@@ -18,7 +18,7 @@ public static class Extensions
     }
 }
 
-public static class Util
+public static class Utils
 {
     public static Side GetSideFromChar(char c)
     {
