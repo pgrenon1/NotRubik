@@ -20,6 +20,39 @@ public static class Extensions
 
 public static class Utils
 {
+    public static List<Side> GetConnectedSides(Side side)
+    {
+        List<Side> connectedSides = new List<Side>();
+        foreach (Side other in Enum.GetValues(typeof(Side)))
+        {
+            if (GetOppositeSide(side) != other)
+                connectedSides.Add(other);
+        }
+
+        return connectedSides;
+    }
+
+    public static Side GetOppositeSide(Side side)
+    {
+        switch (side)
+        {
+            case Side.Back:
+                return Side.Front;
+            case Side.Front:
+                return Side.Back;
+            case Side.Right:
+                return Side.Left;
+            case Side.Left:
+                return Side.Right;
+            case Side.Up:
+                return Side.Down;
+            case Side.Down:
+                return Side.Up;
+            default:
+                return Side.None;
+        }
+    }
+
     public static Side GetSideFromChar(char c)
     {
         foreach (Side side in Enum.GetValues(typeof(Side)))
@@ -29,7 +62,7 @@ public static class Utils
         }
 
         Debug.LogError("oh no, problem here");
-        return Side.Back;
+        return Side.None;
     }
 
     public static char GetLetterForSide(SideRotation step)
@@ -39,16 +72,16 @@ public static class Utils
 
     public static Vector3 GetWorldDirectionForSide(Side side)
     {
-        // I know this is wierd but it works so http://gph.is/1gT9SpQ
+        // I know this is weird but it works so http://gph.is/1gT9SpQ
         switch (side)
         {
             case Side.Back:
                 return Vector3.back;
             case Side.Front:
                 return Vector3.forward;
-            case Side.Right:
+            case Side.Right: // this = wtf
                 return Vector3.left;
-            case Side.Left:
+            case Side.Left: // and that = wtf
                 return Vector3.right;
             case Side.Up:
                 return Vector3.up;

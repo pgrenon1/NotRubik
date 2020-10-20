@@ -414,9 +414,9 @@ MonoBehaviour:
   cubePrefab: {fileID: 3562773703704425550, guid: fc11bb6eed47c9645aa838a718a94788, type: 3}
   defaultLevelData:
     dimensions:
-      width: 2
-      height: 2
-      depth: 2
+      width: 3
+      height: 3
+      depth: 3
 --- !u!4 &1714760019
 Transform:
   m_ObjectHideFlags: 0

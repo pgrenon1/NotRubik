@@ -168,10 +168,10 @@ public class Cube : OdinSerializedBehaviour
 
     private void ParentCubesToActiveSideParent(Side side)
     {
-        foreach (var kvp in Sides)
+        foreach (KeyValuePair<Side, List<Cubelet>> entry in Sides)
         {
-            var cubelets = kvp.Value;
-            var cubeletSide = kvp.Key;
+            var cubelets = entry.Value;
+            var cubeletSide = entry.Key;
 
             if (cubeletSide == side)
             {

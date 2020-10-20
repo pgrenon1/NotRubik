@@ -9,7 +9,7 @@ public class Graph : MonoBehaviour
 
     public PointGraph PointGraph { get; private set; }
     public Cube Cube { get; private set; }
-    public Dictionary<Side, List<PointNode>> Sides { get; set; } = new Dictionary<Side, List<PointNode>>();
+    public Dictionary<Facelet, PointNode> Nodes { get; set; } = new Dictionary<Facelet, PointNode>();
 
     public void Init(Cube cube)
     {
@@ -24,59 +24,121 @@ public class Graph : MonoBehaviour
 
     private void GenerateConnections()
     {
-        PointGraph.maxDistance = 1.1f;
-        PointGraph.ConnectNodes();
-        //PointGraph.Scan();
+        ConnectSideNodes();
+
+        ConnectSidesToSides();
+
+        SetAllConnectionCosts(1);
+    }
+
+    private void SetAllConnectionCosts(uint cost)
+    {
         AstarPath.active.AddWorkItem(new AstarWorkItem(ctx =>
         {
-
-            foreach (var kvp in Sides)
+            PointGraph.GetNodes(node =>
             {
-                var sideNodes = kvp.Value;
+                PointNode pointNode = node as PointNode;
 
-                for (int i = 0; i < sideNodes.Count; i++)
+                if (pointNode != null)
                 {
-                    
+                    for (int i = 0; i < pointNode.connections.Length; i++)
+                    {
+                        pointNode.connections[i].cost = cost;
+                    }
                 }
-            }
-            //PointGraph.GetNodes(node =>
-            //{
-            //});
+
+                //node.SetConnectivityDirty();
+            });
+
+            //PointGraph.RegisterConnectionLength(1);
         }));
     }
 
-    private Side GetSideForNode(GraphNode targetNode)
+    private void ConnectSidesToSides()
     {
-        foreach (var kvp in Sides)
+        foreach (KeyValuePair<Side, List<Cubelet>> entry in Cube.Sides)
         {
-            var side = kvp.Key;
-            var nodes = kvp.Value;
-            foreach (var node in nodes)
+            var side = entry.Key;
+            var cubelets = entry.Value;
+
+            foreach (var cubelet in cubelets)
             {
-                if (targetNode == node)
-                    return side;
+                List<PointNode> nodesOfThisCubelet = GetNodesOfCubelet(cubelet);
+
+                if (nodesOfThisCubelet.Count <= 1)
+                    continue;
+
+                ConnectNodes(nodesOfThisCubelet);
+            }
+        }
+    }
+
+    private static void ConnectNodes(List<PointNode> nodesOfThisCubelet)
+    {
+        foreach (var node in nodesOfThisCubelet)
+        {
+            foreach (var other in nodesOfThisCubelet)
+            {
+                if (node == other)
+                    continue;
+
+                node.AddConnection(other, 1);
+            }
+        }
+    }
+
+    private List<PointNode> GetNodesOfCubelet(Cubelet cubelet)
+    {
+        List<PointNode> nodesOfThisCubelet = new List<PointNode>();
+        foreach (var facelet in cubelet.facelets)
+        {
+            PointNode node = null;
+            if (Nodes.TryGetValue(facelet, out node))
+            {
+                nodesOfThisCubelet.Add(node);
             }
         }
 
-        return Side.None;
+        return nodesOfThisCubelet;
     }
+
+    private void ConnectSideNodes()
+    {
+        PointGraph.maxDistance = 1.1f;
+        PointGraph.ConnectNodes();
+    }
+
+    //private Side GetSideForNode(GraphNode targetNode)
+    //{
+    //    foreach (var kvp in Nodes)
+    //    {
+    //        var side = kvp.Key;
+    //        var nodes = kvp.Value;
+    //        foreach (var node in nodes)
+    //        {
+    //            if (targetNode == node)
+    //                return side;
+    //        }
+    //    }
+
+    //    return Side.None;
+    //}
 
     private void GenerateNodes()
     {
         AstarPath.active.Scan(PointGraph);
 
-        Sides.Clear();
+        Nodes.Clear();
 
         AstarPath.active.AddWorkItem(new AstarWorkItem(ctx =>
         {
-            foreach (var kvp in Cube.Sides)
+            foreach (KeyValuePair<Side, List<Cubelet>> entry in Cube.Sides)
             {
-                var side = kvp.Key;
-
-                Sides.Add(side, new List<PointNode>());
+                var side = entry.Key;
+                var cubelets = entry.Value;
 
                 var worldDirection = Utils.GetWorldDirectionForSide(side);
-                foreach (var cubelet in kvp.Value)
+                foreach (var cubelet in cubelets)
                 {
                     var outwardFacelet = cubelet.GetFaceletAtWorldDirection(worldDirection);
 
@@ -85,7 +147,7 @@ public class Graph : MonoBehaviour
                         var nodePosition = outwardFacelet.transform.position + worldDirection.normalized * nodeDistance;
                         var newNode = PointGraph.AddNode((Int3)nodePosition);
 
-                        Sides[side].Add(newNode);
+                        Nodes.Add(outwardFacelet, newNode);
                     }
                 }
             }
