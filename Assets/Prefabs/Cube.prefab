@@ -60,6 +60,7 @@ MonoBehaviour:
   sideRotationSpeed: 0.15
   cubeletsParents: {fileID: 8037814265151913736}
   showRotationStepInputsOnSelectedOnly: 0
+  numberOfRecordedManipulations: 10
   debugSide: 0
 --- !u!114 &6009914356289839737
 MonoBehaviour:
