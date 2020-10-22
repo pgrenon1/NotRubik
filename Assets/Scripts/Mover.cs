@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Pathfinding;
+using Sirenix.OdinInspector.Editor.Drawers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -45,14 +46,17 @@ public class Mover : Entity
         //var angle = Vector3.SignedAngle(Facelet.transform.forward, targetFacelet.transform.forward, transform.right);
         var angle = Vector3.Angle(-Facelet.transform.forward, -targetFacelet.transform.forward);
         var rotation = Quaternion.AngleAxis(angle, transform.right);
-        transform.rotation *= rotation;
+        var targetRotation = rotation * transform.rotation;
 
-        //var targetRotation = transform.rotation.eulerAngles;
-        //targetRotation += rotation.eulerAngles;
-        //transform.rotation *= rotation;
+        var targetPosition = (Vector3)targetNode.position;
+        var projected = Vector3.Project(transform.position - targetPosition, -transform.up);
+        DebugExtension.DebugPoint(projected, 1f, 0.8f);
 
-        transform.DOMove((Vector3)targetNode.position, 1f).OnComplete(MovementCompleted);
-        //transform.DORotate(targetRotation, 1f);
+        var sequence = DOTween.Sequence();
+
+        transform.DOMove(targetPosition, 1f).OnComplete(MovementCompleted);
+        
+        transform.DORotateQuaternion(targetRotation, 1f);
 
         Facelet = targetFacelet;
 
