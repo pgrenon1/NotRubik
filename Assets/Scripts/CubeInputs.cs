@@ -68,7 +68,7 @@ public class CubeInputs : MonoBehaviour
             RotationInput rotationInput = hitInfo.collider.GetComponentInParent<RotationInput>();
             if (rotationInput != null)
             {
-                rotationInput.rotationStep.Execute(Cube);
+                rotationInput.rotationStep.TryExecute(Cube);
             }
         }
     }

@@ -84,7 +84,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   testPrefab: {fileID: 7852058559546616477, guid: 07c449e44911c804e90fd6bb85c4c553, type: 3}
-  createTestEntity: 1
+  createTestEntity: 0
   nodeDistance: 0.3
 --- !u!1 &8079162183995262346
 GameObject:

@@ -400,12 +400,12 @@ public class Cube : OdinSerializedBehaviour
                 if (GUILayout.Button("X+"))
                 {
                     var rotation = new CubeRotation(Vector3.right * 90f);
-                    rotation.Execute(this);
+                    rotation.TryExecute(this);
                 }
                 if (GUILayout.Button("X-"))
                 {
                     var rotation = new CubeRotation(Vector3.left * 90f);
-                    rotation.Execute(this);
+                    rotation.TryExecute(this);
                 }
             }
             GUILayout.EndHorizontal();
@@ -415,12 +415,12 @@ public class Cube : OdinSerializedBehaviour
                 if (GUILayout.Button("Y+"))
                 {
                     var rotation = new CubeRotation(Vector3.up * 90f);
-                    rotation.Execute(this);
+                    rotation.TryExecute(this);
                 }
                 if (GUILayout.Button("Y-"))
                 {
                     var rotation = new CubeRotation(Vector3.down * 90f);
-                    rotation.Execute(this);
+                    rotation.TryExecute(this);
                 }
             }
             GUILayout.EndHorizontal();
@@ -430,12 +430,12 @@ public class Cube : OdinSerializedBehaviour
                 if (GUILayout.Button("Z+"))
                 {
                     var rotation = new CubeRotation(Vector3.forward * 90f);
-                    rotation.Execute(this);
+                    rotation.TryExecute(this);
                 }
                 if (GUILayout.Button("Z-"))
                 {
                     var rotation = new CubeRotation(Vector3.back * 90f);
-                    rotation.Execute(this);
+                    rotation.TryExecute(this);
                 }
             }
             GUILayout.EndHorizontal();
