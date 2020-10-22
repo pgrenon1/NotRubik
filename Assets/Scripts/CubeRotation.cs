@@ -12,6 +12,7 @@ public class CubeRotation : Manipulation
     public override void Execute(Cube cube)
     {
         base.Execute(cube);
+
         cube.RotateBy(axis);
     }
 

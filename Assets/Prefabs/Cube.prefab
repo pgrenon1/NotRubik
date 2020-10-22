@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -60,7 +60,7 @@ MonoBehaviour:
   sideRotationSpeed: 0.15
   cubeletsParents: {fileID: 8037814265151913736}
   showRotationStepInputsOnSelectedOnly: 0
-  numberOfRecordedManipulations: 10
+  numberOfRecordedManipulations: 40
   debugSide: 0
 --- !u!114 &6009914356289839737
 MonoBehaviour:
@@ -74,6 +74,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045f609d48308804487498d6db0035f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 0
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  testPrefab: {fileID: 7852058559546616477, guid: 07c449e44911c804e90fd6bb85c4c553, type: 3}
+  createTestEntity: 0
   nodeDistance: 0.3
 --- !u!1 &8079162183995262346
 GameObject:

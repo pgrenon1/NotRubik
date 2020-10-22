@@ -2,9 +2,13 @@
 using Pathfinding;
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 
-public class Graph : MonoBehaviour
+public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
 {
+    public Mover testPrefab;
+    public bool createTestEntity = false;
+
     public float nodeDistance = 0.3f;
 
     public PointGraph PointGraph { get; private set; }
@@ -20,6 +24,39 @@ public class Graph : MonoBehaviour
         GenerateNodes();
 
         GenerateConnections();
+
+        if (createTestEntity)
+        {
+            var facelet = Cube.AllCubelets[0].facelets[0];
+            CreateTestEntityOnFacelet(facelet, facelet.transform.right);
+            //CreateTestEntityOnFacelet(facelet, facelet.transform.up);
+            //CreateTestEntityOnFacelet(facelet, -facelet.transform.right);
+            //CreateTestEntityOnFacelet(facelet, -facelet.transform.up);
+        }
+    }
+
+    private void CreateTestEntityOnFacelet(Facelet facelet, Vector3 rotation)
+    {
+        var testEntity = Instantiate(testPrefab, Cube.transform);
+        testEntity.Facelet = facelet;
+        var node = Nodes[facelet];
+        testEntity.transform.position = (Vector3)node.position;
+
+        var entityUp = -facelet.transform.forward;
+        testEntity.transform.rotation = Quaternion.LookRotation(rotation, entityUp);
+    }
+
+    public Facelet GetFaceletForNode(GraphNode targetNode)
+    {
+        foreach (KeyValuePair<Facelet, PointNode> entry in Nodes)
+        {
+            var facelet = entry.Key;
+            var node = entry.Value;
+            if (node == targetNode)
+                return facelet;
+        }
+
+        return null;
     }
 
     private void GenerateConnections()
@@ -164,8 +201,12 @@ public class Graph : MonoBehaviour
         PointGraph.GetNodes(node =>
         {
             var position = (Vector3)node.position;
-            Gizmos.color = Color.cyan;
+            Gizmos.color = new Color(51,51,51,51);
             Gizmos.DrawSphere(position, 0.1f);
+
+            GUIStyle style = EditorStyles.boldLabel;
+            style.normal.textColor = Color.cyan;
+            Handles.Label(position + Vector3.up * 0.2f, node.NodeIndex.ToString(), style);
         });
     }
 }

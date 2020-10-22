@@ -15,12 +15,14 @@ public class SideRotation : Manipulation
     public override string ToString()
     {
         var clockwiseString = clockwise ? "" : "'";
+
         return Utils.GetLetterForSide(this).ToString() + clockwiseString;
     }
 
     public override void Execute(Cube cube)
     {
         base.Execute(cube);
+
         cube.RotateSide(this);
     }
 

@@ -57,6 +57,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Undo"",
+                    ""type"": ""Button"",
+                    ""id"": ""3ee2c48f-0142-43bf-b11a-3a643f803ec0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -191,6 +199,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""RotateSideCounterclockwise"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66a452e9-9c7f-40ff-8a9c-64a9ad849c78"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Undo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d44798f0-81b8-4232-9054-4f94132fc04a"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Undo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -250,6 +280,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlayerActions_Move = m_PlayerActions.FindAction("Move", throwIfNotFound: true);
         m_PlayerActions_RotateSideClockwise = m_PlayerActions.FindAction("RotateSideClockwise", throwIfNotFound: true);
         m_PlayerActions_RotateSideCounterclockwise = m_PlayerActions.FindAction("RotateSideCounterclockwise", throwIfNotFound: true);
+        m_PlayerActions_Undo = m_PlayerActions.FindAction("Undo", throwIfNotFound: true);
         // CheatActions
         m_CheatActions = asset.FindActionMap("CheatActions", throwIfNotFound: true);
         m_CheatActions_Shuffle = m_CheatActions.FindAction("Shuffle", throwIfNotFound: true);
@@ -308,6 +339,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerActions_Move;
     private readonly InputAction m_PlayerActions_RotateSideClockwise;
     private readonly InputAction m_PlayerActions_RotateSideCounterclockwise;
+    private readonly InputAction m_PlayerActions_Undo;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -317,6 +349,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_PlayerActions_Move;
         public InputAction @RotateSideClockwise => m_Wrapper.m_PlayerActions_RotateSideClockwise;
         public InputAction @RotateSideCounterclockwise => m_Wrapper.m_PlayerActions_RotateSideCounterclockwise;
+        public InputAction @Undo => m_Wrapper.m_PlayerActions_Undo;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -341,6 +374,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @RotateSideCounterclockwise.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRotateSideCounterclockwise;
                 @RotateSideCounterclockwise.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRotateSideCounterclockwise;
                 @RotateSideCounterclockwise.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRotateSideCounterclockwise;
+                @Undo.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnUndo;
+                @Undo.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnUndo;
+                @Undo.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnUndo;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -360,6 +396,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @RotateSideCounterclockwise.started += instance.OnRotateSideCounterclockwise;
                 @RotateSideCounterclockwise.performed += instance.OnRotateSideCounterclockwise;
                 @RotateSideCounterclockwise.canceled += instance.OnRotateSideCounterclockwise;
+                @Undo.started += instance.OnUndo;
+                @Undo.performed += instance.OnUndo;
+                @Undo.canceled += instance.OnUndo;
             }
         }
     }
@@ -412,6 +451,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnRotateSideClockwise(InputAction.CallbackContext context);
         void OnRotateSideCounterclockwise(InputAction.CallbackContext context);
+        void OnUndo(InputAction.CallbackContext context);
     }
     public interface ICheatActionsActions
     {

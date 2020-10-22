@@ -24,11 +24,13 @@ public class Cube : OdinSerializedBehaviour
     public Dictionary<Side, List<Cubelet>> Sides { get; private set; } = new Dictionary<Side, List<Cubelet>>();
     public GameObject Rotator { get; private set; }
     public CubeDimensions Dimensions { get; private set; }
-    public bool IsRotatingSide { get; private set; } = false;
-    public bool IsRotating { get; private set; } = false;
-    public bool IsShuffling { get; private set; } = false;
+
+    private bool _isRotatingSide = false;
+    private bool _isRotating = false;
+    private bool _isShuffling = false;
+    public bool CanBeManipulated { get { return !_isRotating && !_isShuffling && !_isRotatingSide; } }
     public List<Manipulation> Manipulations { get; private set; } = new List<Manipulation>();
-    public Graph Graph { get; private set; }
+    public GraphManager Graph { get; private set; }
 
     public Side SelectedSide { get; set; } = Side.None;
 
@@ -53,10 +55,10 @@ public class Cube : OdinSerializedBehaviour
 
         SetupSides();
 
-        Graph = GetComponent<Graph>();
+        Graph = GetComponent<GraphManager>();
         Graph.Init(this);
 
-        IsRotatingSide = false;
+        _isRotatingSide = false;
     }
 
     private void Update()
@@ -77,8 +79,7 @@ public class Cube : OdinSerializedBehaviour
 
             foreach (var facelet in cubelet.facelets)
             {
-                var faceletIsOnActiveSide = !IsRotating &&
-                                            !IsRotatingSide &&
+                var faceletIsOnActiveSide = CanBeManipulated &&
                                             SelectedSide != Side.None &&
                                             cubeletIsInSelectedSide &&
                                             facelet == cubelet.GetFaceletAtWorldDirection(worldDirection);
@@ -94,19 +95,12 @@ public class Cube : OdinSerializedBehaviour
 
     public void RotateSide(SideRotation rotationStep)
     {
-        if (IsRotatingSide)
-            return;
-
-        IsRotatingSide = true;
+        _isRotatingSide = true;
 
         GroupSide(rotationStep.side);
 
         var axis = Utils.GetAxisForRotationStep(rotationStep);
-        RotateSelectedSide(axis);
-    }
 
-    private void RotateSelectedSide(Vector3 axis)
-    {
         Rotator.transform.DOBlendableRotateBy(axis * 90f, sideRotationSpeed).OnComplete(SideRotationCompleted);
     }
 
@@ -116,7 +110,7 @@ public class Cube : OdinSerializedBehaviour
 
         SetupSides();
 
-        IsRotatingSide = false;
+        _isRotatingSide = false;
     }
 
     private void RoundCubeletsPositions()
@@ -307,10 +301,7 @@ public class Cube : OdinSerializedBehaviour
 
     public void Shuffle(int numberOfSteps)
     {
-        if (IsShuffling)
-            return;
-
-        IsShuffling = true;
+        _isShuffling = true;
 
         StartCoroutine(DoShuffle(numberOfSteps));
     }
@@ -328,10 +319,10 @@ public class Cube : OdinSerializedBehaviour
         {
             RotateSide(new SideRotation(sides.RandomElement(), UnityEngine.Random.Range(0f, 100f) > 50f));
 
-            yield return new WaitWhile(() => IsRotatingSide);
+            yield return new WaitWhile(() => !CanBeManipulated);
         }
 
-        IsShuffling = false;
+        _isShuffling = false;
     }
 
     public void MoveSelection(Vector2 direction)
@@ -348,20 +339,14 @@ public class Cube : OdinSerializedBehaviour
 
     public void RotateTo(Quaternion targetRotation)
     {
-        if (IsRotating)
-            return;
-
-        IsRotating = true;
+        _isRotating = true;
 
         cubeletsParents.DORotateQuaternion(targetRotation, rotationDuration).OnComplete(CubeRotationCompleted);
     }
 
     public void RotateBy(Vector3 rotation)
     {
-        if (IsRotating)
-            return;
-
-        IsRotating = true;
+        _isRotating = true;
 
         cubeletsParents.DOBlendableRotateBy(rotation, rotationDuration).OnComplete(CubeRotationCompleted);
     }
@@ -372,7 +357,7 @@ public class Cube : OdinSerializedBehaviour
 
         SetupSides();
 
-        IsRotating = false;
+        _isRotating = false;
     }
 
     private void RoundCubeletsRotation()
@@ -502,6 +487,9 @@ public class Cube : OdinSerializedBehaviour
 
     public void Undo()
     {
+        if (Manipulations.Count <= 0 || !CanBeManipulated)
+            return;
+
         var lastManipulation = Manipulations[Manipulations.Count - 1];
         lastManipulation.Undo(this);
 
