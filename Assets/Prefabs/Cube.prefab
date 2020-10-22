@@ -54,7 +54,20 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: Manipulations
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Manipulation, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   cubeletPrefab: {fileID: 8122905227424608093, guid: 2804f50176e823543bb5e4cd451247ab, type: 3}
   rotationDuration: 0.4
   sideRotationSpeed: 0.15

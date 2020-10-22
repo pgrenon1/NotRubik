@@ -29,7 +29,7 @@ public class Cube : OdinSerializedBehaviour
     private bool _isRotating = false;
     private bool _isShuffling = false;
     public bool CanBeManipulated { get { return !_isRotating && !_isShuffling && !_isRotatingSide; } }
-    public List<Manipulation> Manipulations { get; private set; } = new List<Manipulation>();
+    public List<Manipulation> Manipulations = new List<Manipulation>();
     public GraphManager Graph { get; private set; }
 
     public Side SelectedSide { get; set; } = Side.None;
@@ -371,8 +371,32 @@ public class Cube : OdinSerializedBehaviour
         cubeletsParents.eulerAngles = euler;
     }
 
+    public void Undo()
+    {
+        if (Manipulations.Count <= 0 || !CanBeManipulated)
+            return;
+
+        var lastManipulation = Manipulations[Manipulations.Count - 1];
+        lastManipulation.Undo(this);
+
+        Manipulations.Remove(lastManipulation);
+    }
+
+    public void RecordManipulation(Manipulation manipulation)
+    {
+        if (Manipulations.Count >= numberOfRecordedManipulations)
+            Manipulations.RemoveAt(0);
+
+        Manipulations.Add(manipulation);
+    }
+
     private void OnGUI()
     {
+        if (GUILayout.Button("Undo"))
+        {
+            Undo();
+        }
+
         if (GUILayout.Button("Shuffle"))
         {
             Shuffle(10);
@@ -483,24 +507,5 @@ public class Cube : OdinSerializedBehaviour
             GUILayout.EndHorizontal();
         }
         GUILayout.EndVertical();
-    }
-
-    public void Undo()
-    {
-        if (Manipulations.Count <= 0 || !CanBeManipulated)
-            return;
-
-        var lastManipulation = Manipulations[Manipulations.Count - 1];
-        lastManipulation.Undo(this);
-
-        Manipulations.Remove(lastManipulation);
-    }
-
-    public void RecordManipulation(Manipulation manipulation)
-    {
-        if (Manipulations.Count >= numberOfRecordedManipulations)
-            Manipulations.RemoveAt(0);
-
-        Manipulations.Add(manipulation);
     }
 }
