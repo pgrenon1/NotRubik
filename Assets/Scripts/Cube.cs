@@ -29,7 +29,7 @@ public class Cube : OdinSerializedBehaviour
     private bool _isRotating = false;
     private bool _isShuffling = false;
     public bool CanBeManipulated { get { return !_isRotating && !_isShuffling && !_isRotatingSide; } }
-    public List<Manipulation> Manipulations = new List<Manipulation>();
+    public List<Manipulation> Manipulations { get; private set; } = new List<Manipulation>();
     public GraphManager Graph { get; private set; }
 
     public Side SelectedSide { get; set; } = Side.None;

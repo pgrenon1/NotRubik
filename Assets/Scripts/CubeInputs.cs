@@ -35,7 +35,8 @@ public class CubeInputs : MonoBehaviour
 
     private void RotateSelectedSide(bool clockwise)
     {
-        Cube.RotateSelectedSide(clockwise);
+        var sideRotation = new SideRotation(Cube.SelectedSide, clockwise);
+        sideRotation.TryExecute(Cube);
     }
 
     private void MoveSelection(Vector2 direction)
