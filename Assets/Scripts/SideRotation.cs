@@ -19,7 +19,7 @@ public class SideRotation : Manipulation
         return Utils.GetLetterForSide(this).ToString() + clockwiseString;
     }
 
-    public override void Execute(Cube cube)
+    protected override void Execute(Cube cube)
     {
         base.Execute(cube);
 

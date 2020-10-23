@@ -1,40 +1,60 @@
 ﻿using DG.Tweening;
 using Pathfinding;
-using Sirenix.OdinInspector.Editor.Drawers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 public enum MovementBehaviour
 {
+    None,
     Forward,
 }
 
-public class Mover : Entity
+[RequireComponent(typeof(Entity))]
+public class Mover : MonoBehaviour
 {
     public MovementBehaviour movementBehaviour;
 
-    public Facelet Facelet { get; set; }
-
+    public Entity Entity { get; set; }
     public Seeker Seeker { get; private set; }
     public bool IsMoving { get; private set; }
 
-    protected override void Awake()
+    private PointGraph _pointGraph;
+    public PointGraph PointGraph
     {
-        base.Awake();
+        get
+        {
+            if (_pointGraph == null)
+                _pointGraph = GraphManager.Instance.PointGraph;
 
+            return _pointGraph;
+        }
+    }
+
+
+    public delegate void OnEndMovement();
+    public event OnEndMovement EndMovement;
+
+    private void Awake()
+    {
         Seeker = GetComponent<Seeker>();
     }
 
-    private void Update()
+    public bool TryMove()
     {
-        if (!IsMoving)
-            TryMove(transform.forward);
+        if (movementBehaviour == MovementBehaviour.Forward)
+        {
+            // check if can move
+
+            Move(transform.forward);
+        }
+        else if (movementBehaviour == MovementBehaviour.None)
+        {
+            FinishMove();
+        }
+
+        return true;
     }
 
-    public bool TryMove(Vector3 direction)
+    public void Move(Vector3 direction)
     {
         IsMoving = true;
 
@@ -43,8 +63,7 @@ public class Mover : Entity
 
         var targetFacelet = GraphManager.Instance.GetFaceletForNode(targetNode);
 
-        //var angle = Vector3.SignedAngle(Facelet.transform.forward, targetFacelet.transform.forward, transform.right);
-        var angle = Vector3.Angle(-Facelet.transform.forward, -targetFacelet.transform.forward);
+        var angle = Vector3.SignedAngle(-Entity.Facelet.transform.forward, -targetFacelet.transform.forward, transform.right);
         var rotation = Quaternion.AngleAxis(angle, transform.right);
         var targetRotation = rotation * transform.rotation;
 
@@ -54,17 +73,20 @@ public class Mover : Entity
 
         var sequence = DOTween.Sequence();
 
-        transform.DOMove(targetPosition, 1f).OnComplete(MovementCompleted);
-        
+        // This could be bad, nothing makes it certain that the rotation is finished at the same exact time that movement is finished, 
+        // and yet it's the DoMove that calls FinishMove().
         transform.DORotateQuaternion(targetRotation, 1f);
+        
+        transform.DOMove(targetPosition, 1f).OnComplete(FinishMove);
 
-        Facelet = targetFacelet;
-
-        return true;
+        Entity.Facelet = targetFacelet;
     }
 
-    private void MovementCompleted()
+    private void FinishMove()
     {
         IsMoving = false;
+
+        if (EndMovement != null)
+            EndMovement();
     }
 }

@@ -51,7 +51,7 @@ public class Cube : OdinSerializedBehaviour
         Rotator = new GameObject("SideRotator");
         Rotator.transform.SetParent(cubeletsParents);
 
-        GetComponentInChildren<CubeInputs>().Cube = this;
+        GetComponentInChildren<PlayerInputs>().Cube = this;
 
         SetupSides();
 
@@ -317,7 +317,9 @@ public class Cube : OdinSerializedBehaviour
 
         for (int i = 0; i < numberOfSteps; i++)
         {
-            RotateSide(new SideRotation(sides.RandomElement(), UnityEngine.Random.Range(0f, 100f) > 50f));
+            var sideRotation = new SideRotation(sides.RandomElement(), Random.Range(0f, 100f) > 50f);
+
+            sideRotation.TryExecute(this);
 
             yield return new WaitWhile(() => !CanBeManipulated);
         }

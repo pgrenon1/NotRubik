@@ -106,9 +106,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7852058559546616474}
   - component: {fileID: 7852058559546616475}
-  - component: {fileID: 7852058559546616477}
+  - component: {fileID: 8387837520090658519}
+  - component: {fileID: 5646584188182610166}
   m_Layer: 0
-  m_Name: Entity
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,7 +158,19 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!114 &7852058559546616477
+--- !u!114 &8387837520090658519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7852058559546616472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efbf9a798ae76294c8a19c525684083e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5646584188182610166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f67fb43b5a12c48b8b873057fd0590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementBehaviour: 0
+  movementBehaviour: 1
 --- !u!1 &7852058559780204328
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class CubeRotation : Manipulation
         this.axis = axis;
     }
 
-    public override void Execute(Cube cube)
+    protected override void Execute(Cube cube)
     {
         base.Execute(cube);
 

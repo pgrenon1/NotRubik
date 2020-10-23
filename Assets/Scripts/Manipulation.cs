@@ -8,7 +8,7 @@
         }
     }
 
-    public virtual void Execute(Cube cube)
+    protected virtual void Execute(Cube cube)
     {
         cube.RecordManipulation(this);
     }

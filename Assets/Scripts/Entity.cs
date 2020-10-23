@@ -5,20 +5,21 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    private PointGraph _pointGraph;
-    public PointGraph PointGraph
-    {
-        get
-        {
-            if (_pointGraph == null)
-                _pointGraph = GraphManager.Instance.PointGraph;
+    public Facelet Facelet { get; set; }
+    public bool IsTakingTurn { get; private set; }
 
-            return _pointGraph;
-        }
+    public virtual void Init(Facelet facelet)
+    {
+        Facelet = facelet;
     }
 
-    protected virtual void Awake()
+    public virtual void EndTurn()
     {
-        
+        IsTakingTurn = false;
+    }
+
+    public virtual void TakeTurn()
+    {
+        IsTakingTurn = true;
     }
 }

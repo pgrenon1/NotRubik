@@ -24,26 +24,6 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
         GenerateNodes();
 
         GenerateConnections();
-
-        if (createTestEntity)
-        {
-            var facelet = Cube.AllCubelets[0].facelets[0];
-            CreateTestEntityOnFacelet(facelet, facelet.transform.right);
-            //CreateTestEntityOnFacelet(facelet, facelet.transform.up);
-            //CreateTestEntityOnFacelet(facelet, -facelet.transform.right);
-            //CreateTestEntityOnFacelet(facelet, -facelet.transform.up);
-        }
-    }
-
-    private void CreateTestEntityOnFacelet(Facelet facelet, Vector3 rotation)
-    {
-        var testEntity = Instantiate(testPrefab, Cube.transform);
-        testEntity.Facelet = facelet;
-        var node = Nodes[facelet];
-        testEntity.transform.position = (Vector3)node.position;
-
-        var entityUp = -facelet.transform.forward;
-        testEntity.transform.rotation = Quaternion.LookRotation(rotation, entityUp);
     }
 
     public Facelet GetFaceletForNode(GraphNode targetNode)

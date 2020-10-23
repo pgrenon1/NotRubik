@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CubeInputs : MonoBehaviour
+public class PlayerInputs : MonoBehaviour
 {
     public PlayerControls PlayerControls { get; set; }
     public Cube Cube { get; set; }
