@@ -10,6 +10,10 @@ using Random = UnityEngine.Random;
 
 public class Cube : OdinSerializedBehaviour
 {
+    //I added this to hjave a way to take the buttons off when I take screenshots, sorry
+    public bool drawGUIButtons = true;
+
+
     public Cubelet cubeletPrefab;
     public float rotationDuration = 1f;
     public float sideRotationSpeed = 0.25f;
@@ -123,6 +127,7 @@ public class Cube : OdinSerializedBehaviour
         {
             RoundCubeletPosition(cubelet, widthIsEven, heightIsEven, depthIsEven);
             // fuck me lol
+            // <3
             cubelet.transform.localScale = Vector3.one;
         }
     }
@@ -392,120 +397,124 @@ public class Cube : OdinSerializedBehaviour
 
     private void OnGUI()
     {
-        if (GUILayout.Button("Undo"))
+        if (drawGUIButtons)
         {
-            Undo();
-        }
 
-        if (GUILayout.Button("Shuffle"))
-        {
-            Shuffle(10);
-        }
-
-        if (!_lol)
-        {
-            if (GUILayout.Button("Solve"))
+            if (GUILayout.Button("Undo"))
             {
-                Solve();
+                Undo();
             }
-        }
-        else
-        {
-            if (GUILayout.Button("lol"))
-            {
-                Debug.Log("nope");
-            }
-        }
 
-        GUILayout.BeginVertical();
-        {
-            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Shuffle"))
             {
-                if (GUILayout.Button("X+"))
+                Shuffle(10);
+            }
+
+            if (!_lol)
+            {
+                if (GUILayout.Button("Solve"))
                 {
-                    var rotation = new CubeRotation(Vector3.right * 90f);
-                    rotation.TryExecute(this);
-                }
-                if (GUILayout.Button("X-"))
-                {
-                    var rotation = new CubeRotation(Vector3.left * 90f);
-                    rotation.TryExecute(this);
+                    Solve();
                 }
             }
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
+            else
             {
-                if (GUILayout.Button("Y+"))
+                if (GUILayout.Button("lol"))
                 {
-                    var rotation = new CubeRotation(Vector3.up * 90f);
-                    rotation.TryExecute(this);
-                }
-                if (GUILayout.Button("Y-"))
-                {
-                    var rotation = new CubeRotation(Vector3.down * 90f);
-                    rotation.TryExecute(this);
+                    Debug.Log("nope");
                 }
             }
-            GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
+            GUILayout.BeginVertical();
             {
-                if (GUILayout.Button("Z+"))
+                GUILayout.BeginHorizontal();
                 {
-                    var rotation = new CubeRotation(Vector3.forward * 90f);
-                    rotation.TryExecute(this);
+                    if (GUILayout.Button("X+"))
+                    {
+                        var rotation = new CubeRotation(Vector3.right * 90f);
+                        rotation.TryExecute(this);
+                    }
+                    if (GUILayout.Button("X-"))
+                    {
+                        var rotation = new CubeRotation(Vector3.left * 90f);
+                        rotation.TryExecute(this);
+                    }
                 }
-                if (GUILayout.Button("Z-"))
+                GUILayout.EndHorizontal();
+
+                GUILayout.BeginHorizontal();
                 {
-                    var rotation = new CubeRotation(Vector3.back * 90f);
-                    rotation.TryExecute(this);
+                    if (GUILayout.Button("Y+"))
+                    {
+                        var rotation = new CubeRotation(Vector3.up * 90f);
+                        rotation.TryExecute(this);
+                    }
+                    if (GUILayout.Button("Y-"))
+                    {
+                        var rotation = new CubeRotation(Vector3.down * 90f);
+                        rotation.TryExecute(this);
+                    }
+                }
+                GUILayout.EndHorizontal();
+
+                GUILayout.BeginHorizontal();
+                {
+                    if (GUILayout.Button("Z+"))
+                    {
+                        var rotation = new CubeRotation(Vector3.forward * 90f);
+                        rotation.TryExecute(this);
+                    }
+                    if (GUILayout.Button("Z-"))
+                    {
+                        var rotation = new CubeRotation(Vector3.back * 90f);
+                        rotation.TryExecute(this);
+                    }
+                }
+                GUILayout.EndHorizontal();
+
+                if (GUILayout.Button("Rotate To Origin"))
+                {
+                    RotateTo(Quaternion.identity);
                 }
             }
-            GUILayout.EndHorizontal();
+            GUILayout.EndVertical();
 
-            if (GUILayout.Button("Rotate To Origin"))
+            GUILayout.BeginVertical();
             {
-                RotateTo(Quaternion.identity);
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("Select Front"))
+                {
+                    SelectSide(Side.Front);
+                }
+                if (GUILayout.Button("Select Back"))
+                {
+                    SelectSide(Side.Back);
+                }
+                GUILayout.EndHorizontal();
+
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("Select Up"))
+                {
+                    SelectSide(Side.Up);
+                }
+                if (GUILayout.Button("Select Down"))
+                {
+                    SelectSide(Side.Down);
+                }
+                GUILayout.EndHorizontal();
+
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("Select Right"))
+                {
+                    SelectSide(Side.Right);
+                }
+                if (GUILayout.Button("Select Left"))
+                {
+                    SelectSide(Side.Left);
+                }
+                GUILayout.EndHorizontal();
             }
+            GUILayout.EndVertical();
         }
-        GUILayout.EndVertical();
-
-        GUILayout.BeginVertical();
-        {
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Select Front"))
-            {
-                SelectSide(Side.Front);
-            }
-            if (GUILayout.Button("Select Back"))
-            {
-                SelectSide(Side.Back);
-            }
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Select Up"))
-            {
-                SelectSide(Side.Up);
-            }
-            if (GUILayout.Button("Select Down"))
-            {
-                SelectSide(Side.Down);
-            }
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Select Right"))
-            {
-                SelectSide(Side.Right);
-            }
-            if (GUILayout.Button("Select Left"))
-            {
-                SelectSide(Side.Left);
-            }
-            GUILayout.EndHorizontal();
-        }
-        GUILayout.EndVertical();
     }
 }
