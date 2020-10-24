@@ -13,7 +13,7 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
 
     public PointGraph PointGraph { get; private set; }
     public Cube Cube { get; private set; }
-    public Dictionary<Facelet, PointNode> Nodes { get; set; } = new Dictionary<Facelet, PointNode>();
+    public Dictionary<Facelet, PointNode> Nodes { get; private set; } = new Dictionary<Facelet, PointNode>();
 
     public void Init(Cube cube)
     {

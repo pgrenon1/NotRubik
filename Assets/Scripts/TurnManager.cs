@@ -7,18 +7,20 @@ public class TurnManager : OdinserializedSingletonBehaviour<TurnManager>
 {
     public Queue<Actor> Actors { get; set; } = new Queue<Actor>();
 
-    
+    private Coroutine _turnOrderCoroutine;
+
+    public Actor CurrentActor { get { return Actors.Peek(); } }
 
     private void Start()
     {
-        StartCoroutine(TurnOrder());
+        _turnOrderCoroutine = StartCoroutine(TurnOrder());
     }
 
     private IEnumerator TurnOrder()
     {
         while (true)
         {
-            if (Actors.Count > 1)
+            if (Actors.Count > 0)
             {
                 var currentActor = Actors.Dequeue();
 
@@ -28,11 +30,8 @@ public class TurnManager : OdinserializedSingletonBehaviour<TurnManager>
 
                 Actors.Enqueue(currentActor);
             }
+
+            yield return null;
         }
-    }
-
-    public void PassTurn()
-    {
-
-    }
+    }    
 }

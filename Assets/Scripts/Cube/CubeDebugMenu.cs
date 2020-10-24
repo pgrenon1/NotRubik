@@ -155,7 +155,7 @@ public class CubeDebugMenu : MonoBehaviour
             GUILayout.BeginArea(new Rect(0, Screen.height - 20, 200, 20));
             if (GUILayout.Button("Pass Turn"))
             {
-                TurnManager.Instance.PassTurn();
+                
             }
             GUILayout.EndArea();
         }
