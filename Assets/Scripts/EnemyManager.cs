@@ -20,14 +20,6 @@ public class EnemyManager : OdinserializedSingletonBehaviour<EnemyManager>
         }
     }
 
-    public void TakeEnemyTurns() 
-    {
-        foreach (var enemy in Enemies)
-        {
-            enemy.TakeTurn();
-        }
-    }
-
     public void SpawnEnemy(Facelet facelet, Quaternion rotation)
     {
         var newEnemy = Instantiate(enemyPrefab, Cube.transform);
@@ -38,19 +30,6 @@ public class EnemyManager : OdinserializedSingletonBehaviour<EnemyManager>
         newEnemy.transform.rotation = rotation;
 
         Enemies.Add(newEnemy);
-    }
-
-    private void OnGUI()
-    {
-        GUILayout.BeginArea(new Rect(Screen.width - 200, 0, 200, 60));
-        if (GUILayout.Button("Spawn Enemy"))
-        {
-            var facelet = Cube.AllCubelets[0].facelets[0];
-            var entityUp = -facelet.transform.forward;
-            var forward = facelet.transform.right;
-            var rotation = Quaternion.LookRotation(forward, entityUp);
-            SpawnEnemy(facelet, rotation);
-        }
-        GUILayout.EndArea();
+        TurnManager.Instance.Actors.Enqueue(newEnemy);
     }
 }

@@ -9,6 +9,7 @@ public class PlayerInputs : MonoBehaviour
 {
     public PlayerControls PlayerControls { get; set; }
     public Cube Cube { get; set; }
+    public CubeDebugMenu CubeDebugMenu { get; set; }
 
     protected void Awake()
     {
@@ -20,12 +21,18 @@ public class PlayerInputs : MonoBehaviour
     {
         PlayerControls.CheatActions.Shuffle.performed += ctx => Shuffle();
         PlayerControls.CheatActions.CycleSelection.performed += ctx => CycleSelection();
+        PlayerControls.CheatActions.ToggleDebugMenu.performed += ctx => ToggleDebugMenu();
 
         PlayerControls.PlayerActions.Press.performed += ctx => PointerPress();
         PlayerControls.PlayerActions.Undo.performed += ctx => Undo();
         PlayerControls.PlayerActions.Move.performed += ctx => MoveSelection(PlayerControls.PlayerActions.Move.ReadValue<Vector2>());
         PlayerControls.PlayerActions.RotateSideClockwise.performed += ctx => RotateSelectedSide(true);
         PlayerControls.PlayerActions.RotateSideCounterclockwise.performed += ctx => RotateSelectedSide(false);
+    }
+
+    private void ToggleDebugMenu()
+    {
+        CubeDebugMenu.Toggle();
     }
 
     private void Undo()

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6142667068445172721}
   - component: {fileID: 3562773703704425550}
   - component: {fileID: 6009914356289839737}
+  - component: {fileID: 7991984096362098498}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -54,20 +55,8 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: Manipulations
-      Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[Manipulation, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
+  drawGUIButtons: 1
   cubeletPrefab: {fileID: 8122905227424608093, guid: 2804f50176e823543bb5e4cd451247ab, type: 3}
   rotationDuration: 0.4
   sideRotationSpeed: 0.15
@@ -99,6 +88,18 @@ MonoBehaviour:
   testPrefab: {fileID: 7852058559546616477, guid: 07c449e44911c804e90fd6bb85c4c553, type: 3}
   createTestEntity: 0
   nodeDistance: 0.3
+--- !u!114 &7991984096362098498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349656028753389192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aacfae4971873774caa26b4976155b3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8079162183995262346
 GameObject:
   m_ObjectHideFlags: 0

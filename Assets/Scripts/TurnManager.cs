@@ -1,16 +1,38 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TurnManager : OdinserializedSingletonBehaviour<TurnManager>
 {
-    private void OnGUI()
+    public Queue<Actor> Actors { get; set; } = new Queue<Actor>();
+
+    
+
+    private void Start()
     {
-        GUILayout.BeginArea(new Rect(0, Screen.height - 60, 200, 60));
-        if (GUILayout.Button("Pass Turn"))
+        StartCoroutine(TurnOrder());
+    }
+
+    private IEnumerator TurnOrder()
+    {
+        while (true)
         {
-            EnemyManager.Instance.TakeEnemyTurns();
+            if (Actors.Count > 1)
+            {
+                var currentActor = Actors.Dequeue();
+
+                currentActor.TakeTurn();
+
+                yield return new WaitWhile(() => currentActor.IsTakingTurn);
+
+                Actors.Enqueue(currentActor);
+            }
         }
-        GUILayout.EndArea();
+    }
+
+    public void PassTurn()
+    {
+
     }
 }

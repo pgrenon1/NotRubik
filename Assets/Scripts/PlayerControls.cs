@@ -243,6 +243,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ToggleDebugMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""146b74e1-cc6f-43f5-8869-0965ec7db8f9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -267,6 +275,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""CycleSelection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2db97c31-715e-4ee4-bd0b-e2f904e22eff"",
+                    ""path"": ""<Keyboard>/f1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleDebugMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -285,6 +304,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_CheatActions = asset.FindActionMap("CheatActions", throwIfNotFound: true);
         m_CheatActions_Shuffle = m_CheatActions.FindAction("Shuffle", throwIfNotFound: true);
         m_CheatActions_CycleSelection = m_CheatActions.FindAction("CycleSelection", throwIfNotFound: true);
+        m_CheatActions_ToggleDebugMenu = m_CheatActions.FindAction("ToggleDebugMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -409,12 +429,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private ICheatActionsActions m_CheatActionsActionsCallbackInterface;
     private readonly InputAction m_CheatActions_Shuffle;
     private readonly InputAction m_CheatActions_CycleSelection;
+    private readonly InputAction m_CheatActions_ToggleDebugMenu;
     public struct CheatActionsActions
     {
         private @PlayerControls m_Wrapper;
         public CheatActionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shuffle => m_Wrapper.m_CheatActions_Shuffle;
         public InputAction @CycleSelection => m_Wrapper.m_CheatActions_CycleSelection;
+        public InputAction @ToggleDebugMenu => m_Wrapper.m_CheatActions_ToggleDebugMenu;
         public InputActionMap Get() { return m_Wrapper.m_CheatActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -430,6 +452,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @CycleSelection.started -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnCycleSelection;
                 @CycleSelection.performed -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnCycleSelection;
                 @CycleSelection.canceled -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnCycleSelection;
+                @ToggleDebugMenu.started -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnToggleDebugMenu;
+                @ToggleDebugMenu.performed -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnToggleDebugMenu;
+                @ToggleDebugMenu.canceled -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnToggleDebugMenu;
             }
             m_Wrapper.m_CheatActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -440,6 +465,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @CycleSelection.started += instance.OnCycleSelection;
                 @CycleSelection.performed += instance.OnCycleSelection;
                 @CycleSelection.canceled += instance.OnCycleSelection;
+                @ToggleDebugMenu.started += instance.OnToggleDebugMenu;
+                @ToggleDebugMenu.performed += instance.OnToggleDebugMenu;
+                @ToggleDebugMenu.canceled += instance.OnToggleDebugMenu;
             }
         }
     }
@@ -457,5 +485,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnShuffle(InputAction.CallbackContext context);
         void OnCycleSelection(InputAction.CallbackContext context);
+        void OnToggleDebugMenu(InputAction.CallbackContext context);
     }
 }

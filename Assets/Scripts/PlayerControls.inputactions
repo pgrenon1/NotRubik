@@ -230,6 +230,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ToggleDebugMenu",
+                    "type": "Button",
+                    "id": "146b74e1-cc6f-43f5-8869-0965ec7db8f9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -252,6 +260,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "CycleSelection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2db97c31-715e-4ee4-bd0b-e2f904e22eff",
+                    "path": "<Keyboard>/f1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleDebugMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
