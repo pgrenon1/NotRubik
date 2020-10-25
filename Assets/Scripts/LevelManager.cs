@@ -14,6 +14,9 @@ public class LevelManager : OdinserializedSingletonBehaviour<LevelManager>
     public Cube CurrentCube { get; private set; }
     public LevelData CurrentLevelSetting { get; private set; }
 
+    public delegate void OnLevelGenerated();
+    public event OnLevelGenerated LevelGenerated;
+
     [Button("Generate Level", ButtonSizes.Large)]
     public void GenerateDefault()
     {
