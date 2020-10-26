@@ -37,6 +37,9 @@ public class LevelManager : OdinserializedSingletonBehaviour<LevelManager>
         CurrentCube = CreateCube();
 
         CurrentCube.Init(CurrentLevelSetting);
+
+        if (LevelGenerated != null)
+            LevelGenerated();
     }
 
     private Cube CreateCube()

@@ -111,6 +111,7 @@ public class Cube : OdinSerializedBehaviour
         SetupSides();
 
         _isRotatingSide = false;
+        GraphManager.Instance.NodeToFaceletCacheIsDirty = true;
     }
 
     private void RoundCubeletsPositions()

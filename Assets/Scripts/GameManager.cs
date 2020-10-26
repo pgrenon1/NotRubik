@@ -5,10 +5,30 @@ using UnityEngine;
 public class GameManager : OdinserializedSingletonBehaviour<GameManager>
 {
     public bool spawnPlayer;
-    public Player player;
+    public Player playerPrefab;
+
+    public Player Player { get; private set; }
 
     private void Start()
     {
-        LevelManager.Instance.
+        LevelManager.Instance.LevelGenerated += LevelGenerated;
+    }
+
+    private void LevelGenerated()
+    {
+        SpawnPlayer();
+    }
+
+    private void SpawnPlayer()
+    {
+        var cube = LevelManager.Instance.CurrentCube;
+        Debug.Log("player");
+        Player = Instantiate(playerPrefab, cube.transform);
+
+        // find the middle cubelet of the top side
+        var nodes = GraphManager.Instance.Nodes[Side.Up];
+        var middleNode=  nodes[Mathf.FloorToInt(nodes.Count / 2)];
+        Player.transform.position = (Vector3)middleNode.position;
+        Player.Init(middleNode);
     }
 }

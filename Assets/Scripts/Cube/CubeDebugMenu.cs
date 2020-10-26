@@ -144,18 +144,20 @@ public class CubeDebugMenu : MonoBehaviour
             GUILayout.BeginArea(new Rect(Screen.width - 200, 0, 200, 20));
             if (GUILayout.Button("Spawn Enemy"))
             {
-                var facelet = Cube.AllCubelets[0].facelets[0];
-                var entityUp = -facelet.transform.forward;
-                var forward = facelet.transform.right;
+                var randomSide = Utils.RandomSide(true);
+                var nodes = GraphManager.Instance.Nodes[randomSide];
+                var node = nodes.RandomElement();
+                var entityUp = Utils.GetWorldDirectionForSide(randomSide);
+                var forward = node.GetFacelet().transform.right;
                 var rotation = Quaternion.LookRotation(forward, entityUp);
-                EnemyManager.Instance.SpawnEnemy(facelet, rotation);
+                EnemyManager.Instance.SpawnEnemy(node, rotation);
             }
             GUILayout.EndArea();
 
             GUILayout.BeginArea(new Rect(0, Screen.height - 20, 200, 20));
             if (GUILayout.Button("Pass Turn"))
             {
-                
+                GameManager.Instance.Player.EndTurn();
             }
             GUILayout.EndArea();
         }

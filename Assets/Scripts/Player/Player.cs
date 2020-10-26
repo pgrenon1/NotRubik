@@ -5,8 +5,5 @@ using UnityEngine;
 [RequireComponent(typeof(Mover))]
 public class Player : Entity
 {
-    public void PassTurn()
-    {
-        EndTurn();
-    }
+
 }

@@ -13,7 +13,10 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
 
     public PointGraph PointGraph { get; private set; }
     public Cube Cube { get; private set; }
-    public Dictionary<Facelet, PointNode> Nodes { get; private set; } = new Dictionary<Facelet, PointNode>();
+    public Dictionary<Side, List<PointNode>> Nodes { get; private set; } = new Dictionary<Side, List<PointNode>>();
+    public bool NodeToFaceletCacheIsDirty { get; set; } = true;
+
+    private Dictionary<PointNode, Facelet> _nodeToFaceletCache = new Dictionary<PointNode, Facelet>();
 
     public void Init(Cube cube)
     {
@@ -24,19 +27,6 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
         GenerateNodes();
 
         GenerateConnections();
-    }
-
-    public Facelet GetFaceletForNode(GraphNode targetNode)
-    {
-        foreach (KeyValuePair<Facelet, PointNode> entry in Nodes)
-        {
-            var facelet = entry.Key;
-            var node = entry.Value;
-            if (node == targetNode)
-                return facelet;
-        }
-
-        return null;
     }
 
     private void GenerateConnections()
@@ -69,6 +59,22 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
 
             //PointGraph.RegisterConnectionLength(1);
         }));
+    }
+
+    public Facelet GetFaceletForNode(PointNode node)
+    {
+        if (NodeToFaceletCacheIsDirty)
+            UpdateFaceletToNodeCache();
+
+        foreach (var nodeToFacelet in _nodeToFaceletCache)
+        {
+            if (nodeToFacelet.Key == node)
+            {
+                return nodeToFacelet.Value;
+            }
+        }
+
+        return null;
     }
 
     private void ConnectSidesToSides()
@@ -104,15 +110,49 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
         }
     }
 
+    private void UpdateFaceletToNodeCache()
+    {
+        _nodeToFaceletCache.Clear();
+
+        foreach (KeyValuePair<Side, List<PointNode>> entry in Nodes)
+        {
+            var side = entry.Key;
+            var nodes = entry.Value;
+
+            foreach (var node in nodes)
+            {
+                var facelet = node.GetFacelet();
+
+                if (_nodeToFaceletCache.ContainsKey(node))
+                    _nodeToFaceletCache[node] = facelet;
+                else
+                    _nodeToFaceletCache.Add(node,facelet);
+            }
+        }
+
+        NodeToFaceletCacheIsDirty = false;
+    }
+
     private List<PointNode> GetNodesOfCubelet(Cubelet cubelet)
     {
+        if (NodeToFaceletCacheIsDirty)
+            UpdateFaceletToNodeCache();
+
         List<PointNode> nodesOfThisCubelet = new List<PointNode>();
-        foreach (var facelet in cubelet.facelets)
+
+        foreach (KeyValuePair<Side, List<PointNode>> entry in Nodes)
         {
-            PointNode node = null;
-            if (Nodes.TryGetValue(facelet, out node))
+            var side = entry.Key;
+            var nodes = entry.Value;
+
+            foreach (var node in nodes)
             {
-                nodesOfThisCubelet.Add(node);
+                var facelet = _nodeToFaceletCache[node];
+
+                if (cubelet.facelets.Contains(facelet))
+                {
+                    nodesOfThisCubelet.Add(node);
+                }
             }
         }
 
@@ -154,6 +194,8 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
                 var side = entry.Key;
                 var cubelets = entry.Value;
 
+                Nodes[side] = new List<PointNode>();
+
                 var worldDirection = Utils.GetWorldDirectionForSide(side);
                 foreach (var cubelet in cubelets)
                 {
@@ -164,7 +206,7 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
                         var nodePosition = outwardFacelet.transform.position + worldDirection.normalized * nodeDistance;
                         var newNode = PointGraph.AddNode((Int3)nodePosition);
 
-                        Nodes.Add(outwardFacelet, newNode);
+                        Nodes[side].Add(newNode);
                     }
                 }
             }

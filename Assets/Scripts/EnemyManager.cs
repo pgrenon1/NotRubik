@@ -20,12 +20,11 @@ public class EnemyManager : OdinserializedSingletonBehaviour<EnemyManager>
         }
     }
 
-    public void SpawnEnemy(Facelet facelet, Quaternion rotation)
+    public void SpawnEnemy(PointNode node, Quaternion rotation)
     {
         var newEnemy = Instantiate(enemyPrefab, Cube.transform);
 
-        newEnemy.Init(facelet);
-        var node = GraphManager.Instance.Nodes[facelet];
+        newEnemy.Init(node);
         newEnemy.transform.position = (Vector3)node.position;
         newEnemy.transform.rotation = rotation;
 

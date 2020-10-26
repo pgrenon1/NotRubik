@@ -59,11 +59,12 @@ public class Mover : MonoBehaviour
         IsMoving = true;
 
         var nNInfoInternal = PointGraph.GetNearest(transform.position + direction);
-        var targetNode = nNInfoInternal.node;
+        var targetNode = nNInfoInternal.node as PointNode;
 
         var targetFacelet = GraphManager.Instance.GetFaceletForNode(targetNode);
+        var currentFacelet = GraphManager.Instance.GetFaceletForNode(Entity.Node);
 
-        var angle = Vector3.SignedAngle(-Entity.Facelet.transform.forward, -targetFacelet.transform.forward, transform.right);
+        var angle = Vector3.SignedAngle(-Entity.Node.d.forward, -targetFacelet.transform.forward, transform.right);
         var rotation = Quaternion.AngleAxis(angle, transform.right);
         var targetRotation = rotation * transform.rotation;
 
@@ -79,7 +80,7 @@ public class Mover : MonoBehaviour
         
         transform.DOMove(targetPosition, 1f).OnComplete(FinishMove);
 
-        Entity.Facelet = targetFacelet;
+        Entity.Node = targetFacelet;
     }
 
     private void FinishMove()

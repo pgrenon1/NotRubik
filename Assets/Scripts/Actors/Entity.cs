@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 public class Entity : Actor
 {
-    public Facelet Facelet { get; set; }
+    public PointNode Node { get; set; }
     public Mover Mover { get; private set; }
 
-    public virtual void Init(Facelet facelet)
+    public virtual void Init(PointNode node)
     {
-        Facelet = facelet;
+        Node = node;
 
         Mover = GetComponent<Mover>();
         Mover.Entity = this;
