@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3562773703704425550}
   - component: {fileID: 6009914356289839737}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Cube_Prototyping
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,23 +54,11 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: Manipulations
-      Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[Manipulation, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-  cubeletPrefab: {fileID: 8122905227424608093, guid: 2804f50176e823543bb5e4cd451247ab, type: 3}
+    SerializationNodes: []
+  cubeletPrefab: {fileID: 8122905227424608093, guid: 5bf38d109826b2e4da6eef741de2694a, type: 3}
   rotationDuration: 0.4
   sideRotationSpeed: 0.15
+  subdivisions: 2
   cubeletsParents: {fileID: 8037814265151913736}
   showRotationStepInputsOnSelectedOnly: 0
   numberOfRecordedManipulations: 40

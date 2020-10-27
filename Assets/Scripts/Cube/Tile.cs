@@ -1,15 +1,24 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class Tile
+
+public class Tile : MonoBehaviour
 {
 
-    List<TileEffect> tileEffects { get; set; } = new List<TileEffect>();
-   
+    public TileData tileData;
 
-    public void ApplyEffectToTile(TileEffect effect)
+
+    public void GetAllTileEffects()
     {
-        tileEffects.Add(effect);
+        ///As strings for now, just for testing
+        foreach (TileEffect tileEffect in tileData.tileEffects)
+        {
+            tileEffect.ExamineTileEffectData();
+        }
     }
 
-
+    public void LinkToNode()
+    {
+    }
+    
 }
