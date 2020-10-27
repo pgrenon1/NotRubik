@@ -13,6 +13,7 @@ public class Cube : OdinSerializedBehaviour
     public Cubelet cubeletPrefab;
     public float rotationDuration = 1f;
     public float sideRotationSpeed = 0.25f;
+    public int subdivisions = 1;
     public Transform cubeletsParents;
     public bool showRotationStepInputsOnSelectedOnly = true;
     public int numberOfRecordedManipulations = 10;
@@ -83,7 +84,7 @@ public class Cube : OdinSerializedBehaviour
                                             SelectedSide != Side.None &&
                                             cubeletIsInSelectedSide &&
                                             facelet == cubelet.GetFaceletAtWorldDirection(worldDirection);
-                facelet.highlight.SetActive(faceletIsOnActiveSide);
+                facelet.UpdateHighlightVisibility(faceletIsOnActiveSide);
             }
         }
     }

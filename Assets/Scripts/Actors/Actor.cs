@@ -7,6 +7,12 @@ public class Actor : MonoBehaviour
     public bool IsTakingTurn { get; private set; }
     public Mover Mover { get; private set; }
 
+
+    // not sure what to name this, lmk.
+    public bool CanBeAffectedByEffects { get; private set; }
+
+ 
+
     public virtual void Init(PointNode node)
     {
         Node = node;
