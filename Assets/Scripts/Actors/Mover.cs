@@ -8,12 +8,11 @@ public enum MovementBehaviour
     Forward,
 }
 
-[RequireComponent(typeof(Entity))]
 public class Mover : MonoBehaviour
 {
     public MovementBehaviour movementBehaviour;
 
-    public Entity Entity { get; set; }
+    public Actor Actor { get; set; }
     public Seeker Seeker { get; private set; }
     public bool IsMoving { get; private set; }
 
@@ -61,7 +60,7 @@ public class Mover : MonoBehaviour
         var targetNode = nNInfoInternal.node as PointNode;
 
         var targetFacelet = GraphManager.Instance.GetFaceletForNode(targetNode);
-        var currentFacelet = GraphManager.Instance.GetFaceletForNode(Entity.Node);
+        var currentFacelet = GraphManager.Instance.GetFaceletForNode(Actor.Node);
 
         var angle = Vector3.SignedAngle(-currentFacelet.transform.forward, -targetFacelet.transform.forward, transform.right);
         var rotation = Quaternion.AngleAxis(angle, transform.right);
@@ -79,7 +78,7 @@ public class Mover : MonoBehaviour
         
         transform.DOMove(targetPosition, 1f).OnComplete(FinishMove);
 
-        Entity.Node = targetNode;
+        Actor.Node = targetNode;
     }
 
     private void FinishMove()

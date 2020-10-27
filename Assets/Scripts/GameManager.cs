@@ -9,8 +9,10 @@ public class GameManager : OdinserializedSingletonBehaviour<GameManager>
 
     public Player Player { get; private set; }
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         LevelManager.Instance.LevelGenerated += LevelGenerated;
     }
 
@@ -22,13 +24,14 @@ public class GameManager : OdinserializedSingletonBehaviour<GameManager>
     private void SpawnPlayer()
     {
         var cube = LevelManager.Instance.CurrentCube;
-        Debug.Log("player");
+
         Player = Instantiate(playerPrefab, cube.transform);
 
         // find the middle cubelet of the top side
         var nodes = GraphManager.Instance.Nodes[Side.Up];
         var middleNode=  nodes[Mathf.FloorToInt(nodes.Count / 2)];
         Player.transform.position = (Vector3)middleNode.position;
+
         Player.Init(middleNode);
     }
 }

@@ -8,7 +8,6 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
 {
     public Mover testPrefab;
     public bool createTestEntity = false;
-
     public float nodeDistance = 0.3f;
 
     public PointGraph PointGraph { get; private set; }
@@ -109,6 +108,23 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
                 node.AddConnection(other, 1);
             }
         }
+    }
+
+    public Side GetSideForNode(PointNode pointNode)
+    {
+        foreach (KeyValuePair<Side, List<PointNode>> entry in Nodes)
+        {
+            Side side = entry.Key;
+            List<PointNode> nodes = entry.Value;
+
+            foreach (var node in nodes)
+            {
+                if (node == pointNode)
+                    return side;
+            }
+        }
+
+        return Side.None;
     }
 
     private void UpdateFaceletToNodeCache()

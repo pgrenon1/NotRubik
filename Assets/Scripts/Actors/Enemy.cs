@@ -1,4 +1,4 @@
-﻿public class Enemy : Entity
+﻿public class Enemy : Actor
 {
     public override void TakeTurn()
     {

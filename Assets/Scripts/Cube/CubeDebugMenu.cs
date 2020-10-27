@@ -148,8 +148,10 @@ public class CubeDebugMenu : MonoBehaviour
                 var nodes = GraphManager.Instance.Nodes[randomSide];
                 var node = nodes.RandomElement();
                 var entityUp = Utils.GetWorldDirectionForSide(randomSide);
-                var forward = node.GetFacelet().transform.right;
+                var facelet = node.GetFacelet();
+                var forward = facelet.transform.right;
                 var rotation = Quaternion.LookRotation(forward, entityUp);
+
                 EnemyManager.Instance.SpawnEnemy(node, rotation);
             }
             GUILayout.EndArea();

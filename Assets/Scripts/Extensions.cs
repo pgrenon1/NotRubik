@@ -7,7 +7,13 @@ public static class Extensions
 {
     public static Facelet GetFacelet(this PointNode node)
     {
-        Ray ray = new Ray((Vector3)node.position, Vector3.down);
+        var side = GraphManager.Instance.GetSideForNode(node);
+        var direction = -Utils.GetWorldDirectionForSide(side);
+
+        var nodePosition = (Vector3)node.position;
+
+        Debug.DrawRay(nodePosition, direction, Color.red, 15f);
+        Ray ray = new Ray(nodePosition, direction);
         RaycastHit hitInfo;
         if (Physics.Raycast(ray, out hitInfo, 1f))
         {

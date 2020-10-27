@@ -24,11 +24,11 @@ public class EnemyManager : OdinserializedSingletonBehaviour<EnemyManager>
     {
         var newEnemy = Instantiate(enemyPrefab, Cube.transform);
 
-        newEnemy.Init(node);
         newEnemy.transform.position = (Vector3)node.position;
         newEnemy.transform.rotation = rotation;
 
         Enemies.Add(newEnemy);
-        TurnManager.Instance.Actors.Enqueue(newEnemy);
+
+        newEnemy.Init(node);
     }
 }
