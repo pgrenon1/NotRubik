@@ -165,6 +165,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b43a68310b4ef644b8ea2bfde8b712e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  spawnPlayer: 1
+  playerPrefab: {fileID: 4171822637541842886, guid: b359d82702b6588499d90af072965be5, type: 3}
 --- !u!114 &6788341142386416856
 MonoBehaviour:
   m_ObjectHideFlags: 0

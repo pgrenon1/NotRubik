@@ -1,9 +1,24 @@
-﻿using System;
+﻿using Pathfinding;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class Extensions
 {
+    public static Facelet GetFacelet(this PointNode node)
+    {
+        Ray ray = new Ray((Vector3)node.position, Vector3.down);
+        RaycastHit hitInfo;
+        if (Physics.Raycast(ray, out hitInfo, 1f))
+        {
+            var facelet = hitInfo.collider.GetComponent<Facelet>();
+
+            return facelet;
+        }
+
+        return null;
+    }
+
     public static T RandomElement<T>(this List<T> list, bool remove = false)
     {
         var index = UnityEngine.Random.Range(0, list.Count);
@@ -20,6 +35,16 @@ public static class Extensions
 
 public static class Utils
 {
+    public static Side RandomSide(bool visibleOnly)
+    {
+        List<Side> candidates = new List<Side>() { Side.Front, Side.Left, Side.Up };
+
+        if (!visibleOnly)
+            candidates.AddRange(new List<Side>() { Side.Right, Side.Down, Side.Back });
+
+        return candidates.RandomElement();
+    }
+
     public static List<Side> GetConnectedSides(Side side)
     {
         List<Side> connectedSides = new List<Side>();

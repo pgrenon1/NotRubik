@@ -64,7 +64,7 @@ public class Mover : MonoBehaviour
         var targetFacelet = GraphManager.Instance.GetFaceletForNode(targetNode);
         var currentFacelet = GraphManager.Instance.GetFaceletForNode(Entity.Node);
 
-        var angle = Vector3.SignedAngle(-Entity.Node.d.forward, -targetFacelet.transform.forward, transform.right);
+        var angle = Vector3.SignedAngle(-currentFacelet.transform.forward, -targetFacelet.transform.forward, transform.right);
         var rotation = Quaternion.AngleAxis(angle, transform.right);
         var targetRotation = rotation * transform.rotation;
 
@@ -80,7 +80,7 @@ public class Mover : MonoBehaviour
         
         transform.DOMove(targetPosition, 1f).OnComplete(FinishMove);
 
-        Entity.Node = targetFacelet;
+        Entity.Node = targetNode;
     }
 
     private void FinishMove()
