@@ -19,10 +19,12 @@ public class PlayerInputs : MonoBehaviour
 
     private void Start()
     {
+        // Cheat Actions
         PlayerControls.CheatActions.Shuffle.performed += ctx => Shuffle();
         PlayerControls.CheatActions.CycleSelection.performed += ctx => CycleSelection();
         PlayerControls.CheatActions.ToggleDebugMenu.performed += ctx => ToggleDebugMenu();
 
+        // Player Actions
         PlayerControls.PlayerActions.Press.performed += ctx => PointerPress();
         PlayerControls.PlayerActions.Undo.performed += ctx => Undo();
         PlayerControls.PlayerActions.Move.performed += ctx => MoveSelection(PlayerControls.PlayerActions.Move.ReadValue<Vector2>());

@@ -29,7 +29,6 @@ public class Mover : MonoBehaviour
         }
     }
 
-
     public delegate void OnEndMovement();
     public event OnEndMovement EndMovement;
 

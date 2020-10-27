@@ -16,6 +16,7 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
     public Dictionary<Side, List<PointNode>> Nodes { get; private set; } = new Dictionary<Side, List<PointNode>>();
     public bool NodeToFaceletCacheIsDirty { get; set; } = true;
 
+    // look here @alvaro
     private Dictionary<PointNode, Facelet> _nodeToFaceletCache = new Dictionary<PointNode, Facelet>();
 
     public void Init(Cube cube)

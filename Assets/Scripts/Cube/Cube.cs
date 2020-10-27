@@ -111,6 +111,7 @@ public class Cube : OdinSerializedBehaviour
         SetupSides();
 
         _isRotatingSide = false;
+
         GraphManager.Instance.NodeToFaceletCacheIsDirty = true;
     }
 
@@ -123,6 +124,7 @@ public class Cube : OdinSerializedBehaviour
         foreach (var cubelet in AllCubelets)
         {
             RoundCubeletPosition(cubelet, widthIsEven, heightIsEven, depthIsEven);
+            // Dotween seems to have  inconsistency in retaining the scale of objects, so we make sure, after every side rotation, to reset the scale.
             // fuck me lol
             // <3
             cubelet.transform.localScale = Vector3.one;
