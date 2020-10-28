@@ -24,9 +24,13 @@ public abstract class TileEffect
             Debug.LogError(string.Format("{0} has no tileEffectData set. Please set it", this));
     }
     
-    public void ExamineTileEffectData()
+    public TileEffectData ExamineTileEffectData()
     {
+     //I don't think this is the right method but I needed it for debug and now it returns the value
+     //I guess we can use it to return the tileeffectdata aoutisde of this class,
+     //but rename it
         Debug.Log(tileEffectData.name + ": " + tileEffectData.tileEffectDescription);
+        return tileEffectData;
     }
 
 

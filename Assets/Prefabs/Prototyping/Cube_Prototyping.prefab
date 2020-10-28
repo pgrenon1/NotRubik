@@ -55,7 +55,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  cubeletPrefab: {fileID: 8122905227424608093, guid: 5bf38d109826b2e4da6eef741de2694a, type: 3}
+  cubeletPrefab: {fileID: 8122905227424608093, guid: 8e23530a429ef8d4cb9042b89b00515a, type: 3}
   rotationDuration: 0.4
   sideRotationSpeed: 0.15
   subdivisions: 2

@@ -24,4 +24,4 @@ MonoBehaviour:
   tileEffectName: This is the default tile effect
   tileEffectDescription: This effect has no effect
   type: 1
-  tileEffectIcon: {fileID: 21300000, guid: 71c170d46b9606c47b2c5da2aa805392, type: 3}
+  tileEffectIcon: {fileID: 21300000, guid: 45fe6ce22d93dff4b8447c088f40741e, type: 3}
