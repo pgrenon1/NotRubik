@@ -33,4 +33,9 @@ public class Cubelet : MonoBehaviour
 
         return null;
     }
+
+    public Facelet GetFaceletForSide(Side side)
+    {
+        return GetFaceletAtWorldDirection(Utils.GetWorldDirectionForSide(side));
+    }
 }

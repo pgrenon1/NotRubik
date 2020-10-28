@@ -66,15 +66,7 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
         if (NodeToFaceletCacheIsDirty)
             UpdateFaceletToNodeCache();
 
-        foreach (var nodeToFacelet in _nodeToFaceletCache)
-        {
-            if (nodeToFacelet.Key == node)
-            {
-                return nodeToFacelet.Value;
-            }
-        }
-
-        return null;
+        return _nodeToFaceletCache[node];
     }
 
     private void ConnectSidesToSides()
@@ -108,6 +100,22 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
                 node.AddConnection(other, 1);
             }
         }
+    }
+
+    public PointNode GetNodeForFacelet(Facelet facelet)
+    {
+        if (NodeToFaceletCacheIsDirty)
+            UpdateFaceletToNodeCache();
+
+        foreach (var nodeToFacelet in _nodeToFaceletCache)
+        {
+            if (nodeToFacelet.Value == facelet)
+            {
+                return nodeToFacelet.Key;
+            }
+        }
+
+        return null;
     }
 
     public Side GetSideForNode(PointNode pointNode)

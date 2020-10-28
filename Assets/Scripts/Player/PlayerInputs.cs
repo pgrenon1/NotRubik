@@ -10,6 +10,7 @@ public class PlayerInputs : MonoBehaviour
     public PlayerControls PlayerControls { get; set; }
     public Cube Cube { get; set; }
     public CubeDebugMenu CubeDebugMenu { get; set; }
+    public Player Player { get; set;}
 
     protected void Awake()
     {
@@ -75,10 +76,28 @@ public class PlayerInputs : MonoBehaviour
         RaycastHit hitInfo;
         if (Physics.Raycast(ray, out hitInfo))
         {
-            RotationInput rotationInput = hitInfo.collider.GetComponentInParent<RotationInput>();
-            if (rotationInput != null)
+            HandlePointerPress(hitInfo.collider);
+        }
+    }
+
+    private void HandlePointerPress(Collider collider)
+    {
+        RotationInput rotationInput = collider.GetComponentInParent<RotationInput>();
+        if (rotationInput != null)
+        {
+            rotationInput.rotationStep.TryExecute(Cube);
+        }
+
+        Facelet facelet = collider.GetComponent<Facelet>();
+        if (facelet != null)
+        {
+            var side = Cube.GetSideForFacelet(facelet);
+            var faceletIsOnTopSide = side == Side.Up;
+            var node = GraphManager.Instance.GetNodeForFacelet(facelet);
+
+            if (faceletIsOnTopSide && Player.NodeIsOrthogonal(node))
             {
-                rotationInput.rotationStep.TryExecute(Cube);
+                Player.Mover.TryMove();
             }
         }
     }
