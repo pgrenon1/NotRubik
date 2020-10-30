@@ -4,6 +4,7 @@ public class LevelData
     public CubeDimensions dimensions;
 }
 
+
 [System.Serializable]
 public class CubeDimensions
 {

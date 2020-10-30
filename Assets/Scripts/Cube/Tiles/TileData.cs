@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "TileData", menuName = "Assets/TileData", order = 0)]
+[CreateAssetMenu(fileName = "TileData", menuName = "Assets/Tiles/TileData", order = 0)]
 public class TileData : OdinSerializedScriptableObject
 {
 

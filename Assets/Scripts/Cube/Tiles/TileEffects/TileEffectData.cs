@@ -9,7 +9,7 @@ public enum TileEffectType
     //LIFESPAN
 }
 
-[CreateAssetMenu(fileName = "TileEffectData", menuName = "Assets/TileEffectData")]
+[CreateAssetMenu(fileName = "TileEffectData", menuName = "Assets/Tiles/TileEffectData")]
 public class TileEffectData : OdinSerializedScriptableObject
 {
     /// <summary>
