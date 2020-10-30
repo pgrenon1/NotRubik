@@ -111,6 +111,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Facelet_Tiled
       objectReference: {fileID: 0}
+    - target: {fileID: 4819103317733830511, guid: 4b6126e7c096fb7498584fe65a67bd59, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635922121979602853, guid: 4b6126e7c096fb7498584fe65a67bd59, type: 3}
+      propertyPath: m_UseGraphicAlpha
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635922121979602853, guid: 4b6126e7c096fb7498584fe65a67bd59, type: 3}
+      propertyPath: m_EffectColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635922121979602853, guid: 4b6126e7c096fb7498584fe65a67bd59, type: 3}
+      propertyPath: m_EffectColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635922121979602853, guid: 4b6126e7c096fb7498584fe65a67bd59, type: 3}
+      propertyPath: m_EffectColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635922121979602853, guid: 4b6126e7c096fb7498584fe65a67bd59, type: 3}
+      propertyPath: m_EffectColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8969514639501736398, guid: 4b6126e7c096fb7498584fe65a67bd59, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.17581348
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b6126e7c096fb7498584fe65a67bd59, type: 3}
 --- !u!4 &3936245202701729607 stripped

@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class TileEffectDefault : TileEffect
 {
-    public TileEffectDefault(TileEffectData _tileEffectData) : base(_tileEffectData)  {
-
-    }
-
-
-
-
-
+  //  public TileEffectDefault(TileEffectData _tileEffectData) : base(_tileEffectData)  { }
 
     public override bool Apply(Actor actor)
     {

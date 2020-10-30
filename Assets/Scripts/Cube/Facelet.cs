@@ -17,15 +17,7 @@ public class Facelet : MonoBehaviour
     
     public Cubelet Cubelet { get; set; }
 
-    private void Start()
-    {
-     foreach(Tile tile in tiles)
-        {
 
-            tile.attachedFacelet = this;
-            tile.DisplayTileEffect();
-        }
-    }
 
     public void UpdateHighlightVisibility(bool isHighlighted)
     {

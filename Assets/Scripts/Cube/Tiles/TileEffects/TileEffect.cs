@@ -6,30 +6,30 @@ public abstract class TileEffect
     /// they are on a tile containing an effect
 
 
-       
- //PERMANENT and LIFESPAN are there as ideas and future extensions 
+
+    //PERMANENT and LIFESPAN are there as ideas and future extensions 
 
 
-    [SerializeField]
-    protected TileEffectData tileEffectData;
-
-    protected TileEffect(TileEffectData _tileEffectData)
-    {
-        tileEffectData = _tileEffectData;
 
 
-        //Not sure how to make this work but I want to make it sure 
-        //if we're missing one, we should catch it
-        if (!tileEffectData)
-            Debug.LogError(string.Format("{0} has no tileEffectData set. Please set it", this));
-    }
+    //Unsure how to do this. I want to force initilization on inheriting classes, but I also want to expose it in editor.
+    //AND I want us to be able to get the data from other classes
+    public TileEffectData tileEffectData;
+
+    //protected TileEffect(TileEffectData _tileEffectData)
+    //{
+    //    tileEffectData = _tileEffectData;
+
+    //    //Not sure how to make this work but I want to make it sure 
+    //    //if we're missing one, we should catch it
+    //    if (!tileEffectData)
+    //        Debug.LogError(string.Format("{0} has no tileEffectData set. Please set it", this));
+    //}
     
-    public TileEffectData ExamineTileEffectData()
+
+    public TileEffectData GetTileEffectData()
     {
-     //I don't think this is the right method but I needed it for debug and now it returns the value
-     //I guess we can use it to return the tileeffectdata aoutisde of this class,
-     //but rename it
-        Debug.Log(tileEffectData.name + ": " + tileEffectData.tileEffectDescription);
+
         return tileEffectData;
     }
 
