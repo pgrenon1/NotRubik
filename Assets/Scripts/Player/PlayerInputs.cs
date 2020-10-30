@@ -10,7 +10,6 @@ public class PlayerInputs : MonoBehaviour
     public PlayerControls PlayerControls { get; set; }
     public Cube Cube { get; set; }
     public CubeDebugMenu CubeDebugMenu { get; set; }
-    public Player Player { get; set;}
 
     protected void Awake()
     {
@@ -74,7 +73,7 @@ public class PlayerInputs : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Pointer.current.position.ReadValue());
         RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo))
+        if (Physics.Raycast(ray, out hitInfo, LayerMaskManager.Instance.playerInputsLayerMask))
         {
             HandlePointerPress(hitInfo.collider);
         }
@@ -95,9 +94,9 @@ public class PlayerInputs : MonoBehaviour
             var faceletIsOnTopSide = side == Side.Up;
             var node = GraphManager.Instance.GetNodeForFacelet(facelet);
 
-            if (faceletIsOnTopSide && Player.NodeIsOrthogonal(node))
+            if (faceletIsOnTopSide && GameManager.Instance.Player.CanMove(node))
             {
-                Player.Mover.TryMove();
+                GameManager.Instance.Player.Mover.Move(node);
             }
         }
     }

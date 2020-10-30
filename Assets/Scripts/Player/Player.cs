@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Mover))]
-public class Player : Actor
+public class Player : Actor, IMoveable
 {
-    public bool NodeIsOrthogonal(PointNode node)
+    public bool CanMove(PointNode pointNode)
     {
-        var orthogonalNodes = GetOrthogonalNodes();
-
-        return orthogonalNodes.Contains(node);
+        return Mover.NodeIsOrthogonal(pointNode);
     }
+}
+
+public interface IMoveable
+{
+    bool CanMove(PointNode pointNode);
 }

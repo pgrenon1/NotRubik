@@ -16,7 +16,7 @@ public class TurnManager : OdinserializedSingletonBehaviour<TurnManager>
         _turnOrderCoroutine = StartCoroutine(TurnOrder());
     }
 
-    public void AddActor(Actor actor)
+    public void RegisterActor(Actor actor)
     {
         Actors.Enqueue(actor);
     }

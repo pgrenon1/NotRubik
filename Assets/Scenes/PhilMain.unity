@@ -424,6 +424,33 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5433924538486261309, guid: 850288f06c289ad4e9200d8ef7d82a6f, type: 3}
   m_PrefabInstance: {fileID: 6763133409401286503}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1121892880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121892879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a1aab2496eb560449b210bb454e230b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  faceletMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  playerInputsLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!850595691 &2084578004
 LightingSettings:
   m_ObjectHideFlags: 0

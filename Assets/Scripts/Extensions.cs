@@ -12,10 +12,10 @@ public static class Extensions
 
         var nodePosition = (Vector3)node.position;
 
-        Debug.DrawRay(nodePosition, direction, Color.red, 15f);
+        Debug.DrawRay(nodePosition, direction, Color.red, 25f);
         Ray ray = new Ray(nodePosition, direction);
         RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo, 1f))
+        if (Physics.Raycast(ray, out hitInfo, 1f, LayerMaskManager.Instance.faceletMask))
         {
             var facelet = hitInfo.collider.GetComponent<Facelet>();
 

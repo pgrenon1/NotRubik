@@ -254,9 +254,12 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
 
         PointGraph.GetNodes(node =>
         {
-            
             var position = (Vector3)node.position;
-            Gizmos.color = new Color(51,51,51,51);
+            if (_nodeToFaceletCache[node as PointNode] != null)
+                Gizmos.color = new Color(51, 51, 51, 51);
+            else
+                Gizmos.color = Color.red;
+
             Gizmos.DrawSphere(position, 0.1f);
 
             GUIStyle style = EditorStyles.boldLabel;
