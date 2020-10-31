@@ -15,8 +15,18 @@ public class LevelDataAsset : OdinSerializedScriptableObject
     public string levelDescription;
     public CubeDimensions dimensions;
 
-    
-    public List<Tile> levelTiles;
+    public Dictionary<Side, List<TileData>> levelTiles = new Dictionary<Side, List<TileData>>()
+    {
+        { Side.Front, new List<TileData>() },
+        { Side.Back, new List<TileData>() },
+        { Side.Up, new List<TileData>() },
+        { Side.Down, new List<TileData>() },
+        { Side.Left, new List<TileData>() },
+        { Side.Right, new List<TileData>() }
+
+
+    };
+
 
 
 }

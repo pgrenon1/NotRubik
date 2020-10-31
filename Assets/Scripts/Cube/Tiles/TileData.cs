@@ -11,6 +11,7 @@ public class TileData : OdinSerializedScriptableObject
     /// A tile could potentially have multiple effects?
     /// </summary>
    
+    [SerializeField]
     public List<TileEffect> tileEffects = new List<TileEffect>();
     
 }
