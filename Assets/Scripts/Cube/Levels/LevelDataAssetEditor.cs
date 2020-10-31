@@ -19,14 +19,8 @@ public class LevelDataAssetEditor : Editor
     public bool initialized;
 
 
- 
-    LevelDataAsset T;
-    SerializedObject GetTarget;
-    SerializedProperty TargetList;
-
-    private void OnEnable()
-    {
-    }
+    int _selected = 0;
+    string[] _options = new string[] { "Test1", "Test2", "Test3" };
 
     public override void OnInspectorGUI()
     {
@@ -132,19 +126,19 @@ public class LevelDataAssetEditor : Editor
         Rect buttonRect = new Rect(x, y, buttonSize - 4, buttonSize - 4);
 
 
-        if (targetAsset.levelTiles.ContainsKey(side))
-        {
-            GUILayout.BeginArea(buttonRect);
 
-            var tempTileData = new TileData();
-            if (targetAsset.levelTiles[side].Contains(null))
-            {
-                targetAsset.levelTiles[side].Add(tempTileData);
-            }
+           GUILayout.BeginArea(buttonRect);
 
-            targetAsset.levelTiles[side][buttonIndex] = (TileData)EditorGUILayout.ObjectField(targetAsset.levelTiles[side][buttonIndex], typeof(TileData), false);
+
+        EditorGUI.BeginChangeCheck();
+        _selected = EditorGUILayout.Popup("", _selected, _options);
+       // var tempTileData = new TileData();
+       //     GUI.Button(buttonRect, "None");
+
+
             GUILayout.EndArea();
-        }
+
+
     }
 
     
