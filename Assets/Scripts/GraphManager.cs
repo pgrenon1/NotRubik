@@ -254,8 +254,9 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
 
         PointGraph.GetNodes(node =>
         {
-            var position = (Vector3)node.position;
-            if (_nodeToFaceletCache[node as PointNode] != null)
+            var pointNode = node as PointNode;
+            var position = (Vector3)pointNode.position;
+            if (_nodeToFaceletCache[pointNode] != null)
                 Gizmos.color = new Color(51, 51, 51, 51);
             else
                 Gizmos.color = Color.red;
@@ -264,7 +265,8 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
 
             GUIStyle style = EditorStyles.boldLabel;
             style.normal.textColor = Color.cyan;
-            Handles.Label(position + Vector3.up * 0.2f, node.NodeIndex.ToString(), style);
+            var side = GetSideForNode(pointNode);
+            Handles.Label(position + Vector3.up * 0.2f, Nodes[side].IndexOf(pointNode).ToString(), style);
         });
     }
 }
