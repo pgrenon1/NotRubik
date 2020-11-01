@@ -66,15 +66,7 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
         if (NodeToFaceletCacheIsDirty)
             UpdateFaceletToNodeCache();
 
-        foreach (var nodeToFacelet in _nodeToFaceletCache)
-        {
-            if (nodeToFacelet.Key == node)
-            {
-                return nodeToFacelet.Value;
-            }
-        }
-
-        return null;
+        return _nodeToFaceletCache[node];
     }
 
     private void ConnectSidesToSides()
@@ -108,6 +100,22 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
                 node.AddConnection(other, 1);
             }
         }
+    }
+
+    public PointNode GetNodeForFacelet(Facelet facelet)
+    {
+        if (NodeToFaceletCacheIsDirty)
+            UpdateFaceletToNodeCache();
+
+        foreach (var nodeToFacelet in _nodeToFaceletCache)
+        {
+            if (nodeToFacelet.Value == facelet)
+            {
+                return nodeToFacelet.Key;
+            }
+        }
+
+        return null;
     }
 
     public Side GetSideForNode(PointNode pointNode)
@@ -246,14 +254,19 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
 
         PointGraph.GetNodes(node =>
         {
-            
-            var position = (Vector3)node.position;
-            Gizmos.color = new Color(51,51,51,51);
+            var pointNode = node as PointNode;
+            var position = (Vector3)pointNode.position;
+            if (_nodeToFaceletCache[pointNode] != null)
+                Gizmos.color = new Color(51, 51, 51, 51);
+            else
+                Gizmos.color = Color.red;
+
             Gizmos.DrawSphere(position, 0.1f);
 
             GUIStyle style = EditorStyles.boldLabel;
             style.normal.textColor = Color.cyan;
-            Handles.Label(position + Vector3.up * 0.2f, node.NodeIndex.ToString(), style);
+            var side = GetSideForNode(pointNode);
+            Handles.Label(position + Vector3.up * 0.2f, Nodes[side].IndexOf(pointNode).ToString(), style);
         });
     }
 }

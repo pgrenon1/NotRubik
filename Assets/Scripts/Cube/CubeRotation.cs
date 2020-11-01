@@ -9,9 +9,9 @@ public class CubeRotation : Manipulation
         this.axis = axis;
     }
 
-    protected override void Execute(Cube cube)
+    protected override void Execute(Cube cube, Player player)
     {
-        base.Execute(cube);
+        base.Execute(cube, player);
 
         cube.RotateBy(axis);
     }

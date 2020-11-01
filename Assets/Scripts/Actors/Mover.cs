@@ -1,18 +1,11 @@
 ﻿using DG.Tweening;
 using Pathfinding;
+using System.Collections.Generic;
 using UnityEngine;
-
-public enum MovementBehaviour
-{
-    None,
-    Forward,
-}
 
 public class Mover : MonoBehaviour
 {
-    public MovementBehaviour movementBehaviour;
-
-    public Actor Actor { get; set; }
+    public PointNode CurrentNode { get; set; }
     public Seeker Seeker { get; private set; }
     public bool IsMoving { get; private set; }
 
@@ -36,31 +29,10 @@ public class Mover : MonoBehaviour
         Seeker = GetComponent<Seeker>();
     }
 
-    public bool TryMove()
+    public void Move(PointNode targetNode)
     {
-        if (movementBehaviour == MovementBehaviour.Forward)
-        {
-            // check if can move
-
-            Move(transform.forward);
-        }
-        else if (movementBehaviour == MovementBehaviour.None)
-        {
-            FinishMove();
-        }
-
-        return true;
-    }
-
-    public void Move(Vector3 direction)
-    {
-        IsMoving = true;
-
-        var nNInfoInternal = PointGraph.GetNearest(transform.position + direction);
-        var targetNode = nNInfoInternal.node as PointNode;
-
         var targetFacelet = GraphManager.Instance.GetFaceletForNode(targetNode);
-        var currentFacelet = GraphManager.Instance.GetFaceletForNode(Actor.Node);
+        var currentFacelet = GraphManager.Instance.GetFaceletForNode(CurrentNode);
 
         var angle = Vector3.SignedAngle(-currentFacelet.transform.forward, -targetFacelet.transform.forward, transform.right);
         var rotation = Quaternion.AngleAxis(angle, transform.right);
@@ -75,10 +47,20 @@ public class Mover : MonoBehaviour
         // This could be bad, nothing makes it certain that the rotation is finished at the same exact time that movement is finished, 
         // and yet it's the DoMove that calls FinishMove().
         transform.DORotateQuaternion(targetRotation, 1f);
-        
+
         transform.DOMove(targetPosition, 1f).OnComplete(FinishMove);
 
-        Actor.Node = targetNode;
+        CurrentNode = targetNode;
+    }
+
+    public void Move(Vector3 direction)
+    {
+        IsMoving = true;
+
+        var nNInfoInternal = PointGraph.GetNearest(transform.position + direction);
+        var targetNode = nNInfoInternal.node as PointNode;
+
+        Move(targetNode);
     }
 
     private void FinishMove()
@@ -87,5 +69,34 @@ public class Mover : MonoBehaviour
 
         if (EndMovement != null)
             EndMovement();
+    }
+
+    public PointNode GetNodeAtDirection(Vector3 direction)
+    {
+        var nNInfoInternal = GraphManager.Instance.PointGraph.GetNearest(transform.position + direction);
+        var targetNode = nNInfoInternal.node as PointNode;
+
+        return targetNode;
+    }
+
+    public List<PointNode> GetOrthogonalNodes()
+    {
+        var directions = new List<Vector3>() { transform.forward, -transform.forward, transform.right, -transform.right };
+
+        var orthogonalNodes = new List<PointNode>();
+
+        foreach (var direction in directions)
+        {
+            orthogonalNodes.Add(GetNodeAtDirection(direction));
+        }
+
+        return orthogonalNodes;
+    }
+
+    public bool NodeIsOrthogonal(PointNode node)
+    {
+        var orthogonalNodes = GetOrthogonalNodes();
+
+        return orthogonalNodes.Contains(node);
     }
 }

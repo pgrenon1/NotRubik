@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputs : MonoBehaviour
 {
+    public bool freeManipulations = true;
+
     public PlayerControls PlayerControls { get; set; }
     public Cube Cube { get; set; }
     public CubeDebugMenu CubeDebugMenu { get; set; }
@@ -21,15 +23,20 @@ public class PlayerInputs : MonoBehaviour
     {
         // Cheat Actions
         PlayerControls.CheatActions.Shuffle.performed += ctx => Shuffle();
-        PlayerControls.CheatActions.CycleSelection.performed += ctx => CycleSelection();
         PlayerControls.CheatActions.ToggleDebugMenu.performed += ctx => ToggleDebugMenu();
 
         // Player Actions
+        PlayerControls.PlayerActions.EndTurn.performed += ctx => EndTurn();
         PlayerControls.PlayerActions.Press.performed += ctx => PointerPress();
         PlayerControls.PlayerActions.Undo.performed += ctx => Undo();
         PlayerControls.PlayerActions.Move.performed += ctx => MoveSelection(PlayerControls.PlayerActions.Move.ReadValue<Vector2>());
         PlayerControls.PlayerActions.RotateSideClockwise.performed += ctx => RotateSelectedSide(true);
         PlayerControls.PlayerActions.RotateSideCounterclockwise.performed += ctx => RotateSelectedSide(false);
+    }
+
+    private void EndTurn()
+    {
+        GameManager.Instance.Player.TryEndTurn();
     }
 
     private void ToggleDebugMenu()
@@ -45,7 +52,7 @@ public class PlayerInputs : MonoBehaviour
     private void RotateSelectedSide(bool clockwise)
     {
         var sideRotation = new SideRotation(Cube.SelectedSide, clockwise);
-        sideRotation.TryExecute(Cube);
+        sideRotation.TryExecute(Cube, freeManipulations ? null : GameManager.Instance.Player);
     }
 
     private void MoveSelection(Vector2 direction)
@@ -59,26 +66,44 @@ public class PlayerInputs : MonoBehaviour
         Cube.Shuffle(10);
     }
 
-    private void CycleSelection()
-    {
-        if (Cube.SelectedSide == Side.Right)
-            Cube.SelectedSide = Side.None;
-        else
-            Cube.SelectedSide = Cube.SelectedSide + 1;
+    //private void CycleSelection()
+    //{
+    //    if (Cube.SelectedSide == Side.Right)
+    //        Cube.SelectedSide = Side.None;
+    //    else
+    //        Cube.SelectedSide = Cube.SelectedSide + 1;
 
-        Debug.Log(Cube.SelectedSide);
-    }
+    //    Debug.Log(Cube.SelectedSide);
+    //}
 
     private void PointerPress()
     {
         Ray ray = Camera.main.ScreenPointToRay(Pointer.current.position.ReadValue());
         RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo))
+        if (Physics.Raycast(ray, out hitInfo, LayerMaskManager.Instance.playerInputsLayerMask))
         {
-            RotationInput rotationInput = hitInfo.collider.GetComponentInParent<RotationInput>();
-            if (rotationInput != null)
+            HandlePointerPress(hitInfo.collider);
+        }
+    }
+
+    private void HandlePointerPress(Collider collider)
+    {
+        RotationInput rotationInput = collider.GetComponentInParent<RotationInput>();
+        if (rotationInput != null)
+        {
+            rotationInput.rotationStep.TryExecute(Cube, freeManipulations ? null : GameManager.Instance.Player);
+        }
+
+        Facelet facelet = collider.GetComponent<Facelet>();
+        if (facelet != null)
+        {
+            var side = Cube.GetSideForFacelet(facelet);
+            var faceletIsOnTopSide = side == Side.Up;
+            var node = GraphManager.Instance.GetNodeForFacelet(facelet);
+
+            if (faceletIsOnTopSide && GameManager.Instance.Player.CanMove(node))
             {
-                rotationInput.rotationStep.TryExecute(Cube);
+                GameManager.Instance.Player.Mover.Move(node);
             }
         }
     }

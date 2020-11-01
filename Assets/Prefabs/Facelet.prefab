@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4539987729431899635}
   - component: {fileID: 3297622664192045548}
   - component: {fileID: 4849104272833473746}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Facelet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlight: {fileID: 5470694560237272521}
+  tiles: []
 --- !u!1 &5470694560237272521
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6456956872224484930}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Highlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +155,7 @@ GameObject:
   - component: {fileID: 1271126095059993020}
   - component: {fileID: 4723879348710758250}
   - component: {fileID: 4830969096086486832}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Highlight_Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +236,7 @@ GameObject:
   - component: {fileID: 4485483042986904862}
   - component: {fileID: 4140729391561538153}
   - component: {fileID: 3237959886454361826}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Highlight_Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}

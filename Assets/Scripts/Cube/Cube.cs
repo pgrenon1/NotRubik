@@ -91,6 +91,25 @@ public class Cube : OdinSerializedBehaviour
         }
     }
 
+    public Side GetSideForFacelet(Facelet facelet)
+    {
+        foreach (KeyValuePair<Side, List<Cubelet>> entry in Sides)
+        {
+            Side side = entry.Key;
+            List<Cubelet> cubelets = entry.Value;
+
+            foreach (var cubelet in cubelets)
+            {
+                var faceletAtSide = cubelet.GetFaceletForSide(side);
+
+                if (facelet == faceletAtSide)
+                    return side;
+            }
+        }
+
+        return Side.None;
+    }
+
     public void RotateSelectedSide(bool clockwise)
     {
         RotateSide(new SideRotation(SelectedSide, clockwise));
