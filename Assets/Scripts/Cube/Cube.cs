@@ -34,6 +34,8 @@ public class Cube : OdinSerializedBehaviour
     public GraphManager Graph { get; private set; }
 
     public Side SelectedSide { get; set; } = Side.None;
+    
+
 
     [BoxGroup("Debug"), Button("Group Debug Side"), PropertyOrder(1)]
     public void GroupDebugSide()

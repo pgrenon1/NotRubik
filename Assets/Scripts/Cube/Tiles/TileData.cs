@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using Sirenix.Serialization;
 
 [CreateAssetMenu(fileName = "TileData", menuName = "Assets/Tiles/TileData", order = 0)]
 public class TileData : OdinSerializedScriptableObject
@@ -11,7 +12,7 @@ public class TileData : OdinSerializedScriptableObject
     /// A tile could potentially have multiple effects?
     /// </summary>
    
-    [SerializeField]
+    [OdinSerialize]
     public List<TileEffect> tileEffects = new List<TileEffect>();
     
 }
