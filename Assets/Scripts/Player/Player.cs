@@ -70,4 +70,12 @@ public class Player : Actor, IMoveable
     {
         return IsTakingTurn && _numberOfManipulationsThisTurn < numberOfManipulationsPerTurn;
     }
+
+    private void OnGUI()
+    {
+        if (_numberOfManipulationsThisTurn == numberOfManipulationsPerTurn && _numberOfMovesThisTurn == numberOfMovesPerTurn)
+        {
+            GUILayout.Label("Press Space To End Turn");
+        }
+    }
 }

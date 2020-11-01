@@ -170,6 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efbf9a798ae76294c8a19c525684083e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  altitude: 1
+  movementBehaviour: 1
 --- !u!114 &5646584188182610166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f67fb43b5a12c48b8b873057fd0590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementBehaviour: 1
 --- !u!1 &7852058559780204328
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,8 +7,15 @@ public enum MovementBehaviour
     Forward,
 }
 
+public enum Altitude
+{
+    Flying,
+    Walking
+}
+
 public class Enemy : Actor, IMoveable
 {
+    public Altitude altitude;
     public MovementBehaviour movementBehaviour;
 
     public override void TakeTurn()
