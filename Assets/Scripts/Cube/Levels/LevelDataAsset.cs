@@ -18,4 +18,5 @@ public class LevelDataAsset : OdinSerializedScriptableObject
     [OdinSerialize]
     public Dictionary<Side, SideTiles> levelTiles = new Dictionary<Side, SideTiles>();
 
+
 }

@@ -33,6 +33,7 @@ public class LevelDataAssetEditor : Editor
         inspectorDrawZoneRectangle = GUILayoutUtility.GetRect(0, 1000, 0, 1200);
 
         targetAsset = (LevelDataAsset)target;
+        EditorUtility.SetDirty(targetAsset);
         tileDataSize = targetAsset.dimensions.width * targetAsset.dimensions.height;
 
 
