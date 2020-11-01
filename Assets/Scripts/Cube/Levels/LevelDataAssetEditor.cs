@@ -39,7 +39,7 @@ public class LevelDataAssetEditor : Editor
 
     private void DrawInitializer()
     {
-        GUI.BeginClip(inspectorDrawZoneRectangle)
+        GUI.BeginClip(inspectorDrawZoneRectangle);
         {
             if (GUI.Button(new Rect(START_X, START_Y, 500, 30), "Initialize LevelData"))
             {
