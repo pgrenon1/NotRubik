@@ -140,6 +140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e527634534d878b449f00f5c1f3f5ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfMovesPerTurn: 1
+  numberOfManipulationsPerTurn: 1
+  numberOfActionsPerTurn: 2
 --- !u!114 &4171822637541842885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,4 +155,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f67fb43b5a12c48b8b873057fd0590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementBehaviour: 0

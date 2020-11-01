@@ -52,6 +52,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "EndTurn",
+                    "type": "Button",
+                    "id": "ca96e4d9-5a8b-429f-8831-3b503384903c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -208,6 +216,17 @@
                     "action": "Undo",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4bc8778d-dfd4-44c2-81c0-687bdf48b740",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EndTurn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -219,14 +238,6 @@
                     "name": "Shuffle",
                     "type": "Button",
                     "id": "b300db09-fdcd-4ee4-876d-91ba57d97f92",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "CycleSelection",
-                    "type": "Button",
-                    "id": "183dd5f0-aad9-4d4f-85ac-c0d24b471ffd",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -249,17 +260,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Shuffle",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "44c635a0-c339-4286-972d-f642be8095a2",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CycleSelection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

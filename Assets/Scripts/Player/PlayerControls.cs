@@ -65,6 +65,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""EndTurn"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca96e4d9-5a8b-429f-8831-3b503384903c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -221,6 +229,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Undo"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4bc8778d-dfd4-44c2-81c0-687bdf48b740"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EndTurn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -232,14 +251,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""Shuffle"",
                     ""type"": ""Button"",
                     ""id"": ""b300db09-fdcd-4ee4-876d-91ba57d97f92"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""CycleSelection"",
-                    ""type"": ""Button"",
-                    ""id"": ""183dd5f0-aad9-4d4f-85ac-c0d24b471ffd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -267,17 +278,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""44c635a0-c339-4286-972d-f642be8095a2"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CycleSelection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""2db97c31-715e-4ee4-bd0b-e2f904e22eff"",
                     ""path"": ""<Keyboard>/f1"",
                     ""interactions"": """",
@@ -300,10 +300,10 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlayerActions_RotateSideClockwise = m_PlayerActions.FindAction("RotateSideClockwise", throwIfNotFound: true);
         m_PlayerActions_RotateSideCounterclockwise = m_PlayerActions.FindAction("RotateSideCounterclockwise", throwIfNotFound: true);
         m_PlayerActions_Undo = m_PlayerActions.FindAction("Undo", throwIfNotFound: true);
+        m_PlayerActions_EndTurn = m_PlayerActions.FindAction("EndTurn", throwIfNotFound: true);
         // CheatActions
         m_CheatActions = asset.FindActionMap("CheatActions", throwIfNotFound: true);
         m_CheatActions_Shuffle = m_CheatActions.FindAction("Shuffle", throwIfNotFound: true);
-        m_CheatActions_CycleSelection = m_CheatActions.FindAction("CycleSelection", throwIfNotFound: true);
         m_CheatActions_ToggleDebugMenu = m_CheatActions.FindAction("ToggleDebugMenu", throwIfNotFound: true);
     }
 
@@ -360,6 +360,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerActions_RotateSideClockwise;
     private readonly InputAction m_PlayerActions_RotateSideCounterclockwise;
     private readonly InputAction m_PlayerActions_Undo;
+    private readonly InputAction m_PlayerActions_EndTurn;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -370,6 +371,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @RotateSideClockwise => m_Wrapper.m_PlayerActions_RotateSideClockwise;
         public InputAction @RotateSideCounterclockwise => m_Wrapper.m_PlayerActions_RotateSideCounterclockwise;
         public InputAction @Undo => m_Wrapper.m_PlayerActions_Undo;
+        public InputAction @EndTurn => m_Wrapper.m_PlayerActions_EndTurn;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -397,6 +399,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Undo.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnUndo;
                 @Undo.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnUndo;
                 @Undo.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnUndo;
+                @EndTurn.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnEndTurn;
+                @EndTurn.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnEndTurn;
+                @EndTurn.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnEndTurn;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -419,6 +424,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Undo.started += instance.OnUndo;
                 @Undo.performed += instance.OnUndo;
                 @Undo.canceled += instance.OnUndo;
+                @EndTurn.started += instance.OnEndTurn;
+                @EndTurn.performed += instance.OnEndTurn;
+                @EndTurn.canceled += instance.OnEndTurn;
             }
         }
     }
@@ -428,14 +436,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_CheatActions;
     private ICheatActionsActions m_CheatActionsActionsCallbackInterface;
     private readonly InputAction m_CheatActions_Shuffle;
-    private readonly InputAction m_CheatActions_CycleSelection;
     private readonly InputAction m_CheatActions_ToggleDebugMenu;
     public struct CheatActionsActions
     {
         private @PlayerControls m_Wrapper;
         public CheatActionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shuffle => m_Wrapper.m_CheatActions_Shuffle;
-        public InputAction @CycleSelection => m_Wrapper.m_CheatActions_CycleSelection;
         public InputAction @ToggleDebugMenu => m_Wrapper.m_CheatActions_ToggleDebugMenu;
         public InputActionMap Get() { return m_Wrapper.m_CheatActions; }
         public void Enable() { Get().Enable(); }
@@ -449,9 +455,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Shuffle.started -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnShuffle;
                 @Shuffle.performed -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnShuffle;
                 @Shuffle.canceled -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnShuffle;
-                @CycleSelection.started -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnCycleSelection;
-                @CycleSelection.performed -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnCycleSelection;
-                @CycleSelection.canceled -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnCycleSelection;
                 @ToggleDebugMenu.started -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnToggleDebugMenu;
                 @ToggleDebugMenu.performed -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnToggleDebugMenu;
                 @ToggleDebugMenu.canceled -= m_Wrapper.m_CheatActionsActionsCallbackInterface.OnToggleDebugMenu;
@@ -462,9 +465,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Shuffle.started += instance.OnShuffle;
                 @Shuffle.performed += instance.OnShuffle;
                 @Shuffle.canceled += instance.OnShuffle;
-                @CycleSelection.started += instance.OnCycleSelection;
-                @CycleSelection.performed += instance.OnCycleSelection;
-                @CycleSelection.canceled += instance.OnCycleSelection;
                 @ToggleDebugMenu.started += instance.OnToggleDebugMenu;
                 @ToggleDebugMenu.performed += instance.OnToggleDebugMenu;
                 @ToggleDebugMenu.canceled += instance.OnToggleDebugMenu;
@@ -480,11 +480,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnRotateSideClockwise(InputAction.CallbackContext context);
         void OnRotateSideCounterclockwise(InputAction.CallbackContext context);
         void OnUndo(InputAction.CallbackContext context);
+        void OnEndTurn(InputAction.CallbackContext context);
     }
     public interface ICheatActionsActions
     {
         void OnShuffle(InputAction.CallbackContext context);
-        void OnCycleSelection(InputAction.CallbackContext context);
         void OnToggleDebugMenu(InputAction.CallbackContext context);
     }
 }
