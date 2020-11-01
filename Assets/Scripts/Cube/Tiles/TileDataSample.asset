@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f77c804433ae3a4c87c30d44c3181a1, type: 3}
-  m_Name: Default
+  m_Name: TileDataSample
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11400000, guid: b225c449bcf769f44abc03f127f44709, type: 2}
+    - {fileID: 21300000, guid: c2f565f97bb2500409179d6e83100d19, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -30,8 +30,17 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 7
-      Data: 1|TileEffectDefault, Assembly-CSharp
-    - Name: tileEffectData
+      Data: 1|TileEffectSample, Assembly-CSharp
+    - Name: tileEffectName
+      Entry: 1
+      Data: Sample name
+    - Name: tileEffectDescription
+      Entry: 1
+      Data: Sample description
+    - Name: type
+      Entry: 3
+      Data: 0
+    - Name: tileEffectIcon
       Entry: 10
       Data: 0
     - Name: 

@@ -15,7 +15,8 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 18d61cb8265faac4d8f6a7bcdcb07782, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -57,8 +58,8 @@ MonoBehaviour:
       Entry: 12
       Data: 9
     - Name: 
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: 
       Entry: 6
       Data: 
@@ -111,8 +112,8 @@ MonoBehaviour:
       Entry: 12
       Data: 9
     - Name: 
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: 
       Entry: 6
       Data: 
@@ -165,14 +166,14 @@ MonoBehaviour:
       Entry: 12
       Data: 9
     - Name: 
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: 
       Entry: 6
       Data: 
     - Name: 
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: 
       Entry: 6
       Data: 
@@ -219,8 +220,8 @@ MonoBehaviour:
       Entry: 12
       Data: 9
     - Name: 
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: 
       Entry: 6
       Data: 
@@ -273,14 +274,14 @@ MonoBehaviour:
       Entry: 12
       Data: 9
     - Name: 
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: 
       Entry: 6
       Data: 
     - Name: 
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: 
       Entry: 6
       Data: 
@@ -327,8 +328,8 @@ MonoBehaviour:
       Entry: 12
       Data: 9
     - Name: 
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: 
       Entry: 6
       Data: 
@@ -371,9 +372,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  levelName: 
-  levelDescription: 
-  dimensions:
-    width: 3
-    height: 3
-    depth: 3
+  levelName: This is the default level name
+  levelDescription: This is the default level description

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-
 using System.Collections.Generic;
 
 [CustomEditor(typeof(LevelDataAsset))]
@@ -12,56 +11,49 @@ public class LevelDataAssetEditor : Editor
     const int SIDES = 6;
     const float START_Y = 0;
     const int GRIDSIZE = 11;
+    const int TILEDATASIZE = 9;
 
     private Vector2 currentDrawingPosition;
     Rect inspectorDrawZoneRectangle;
 
     LevelDataAsset targetAsset;
-
-    private int tileDataSize;
-
-
-
- //   public Dictionary<Side, List<TileData>> tempLevelTiles = new Dictionary<Side, List<TileData>>();
+    
     public bool initialized;
-
 
     public override void OnInspectorGUI()
     {
-        base.OnInspectorGUI();
 
+        base.OnInspectorGUI();
         inspectorDrawZoneRectangle = GUILayoutUtility.GetRect(0, 1000, 0, 1200);
 
         targetAsset = (LevelDataAsset)target;
-        EditorUtility.SetDirty(targetAsset);
-        tileDataSize = targetAsset.dimensions.width * targetAsset.dimensions.height;
-
 
         if (targetAsset.levelTiles.Count == SIDES) 
             DrawUnwrappedCube();
         else
             DrawInitializer();
 
+        EditorUtility.SetDirty(targetAsset);
     }
 
 
     private void DrawInitializer()
     {
-        GUI.BeginClip(inspectorDrawZoneRectangle);
-        if(GUI.Button(new Rect(START_X, START_Y , 500, 30), "Initialize LevelData"))
+        GUI.BeginClip(inspectorDrawZoneRectangle)
         {
-            Debug.Log("Initializing level data");
-            InitializeLevelData();
-        }
+            if (GUI.Button(new Rect(START_X, START_Y, 500, 30), "Initialize LevelData"))
+            {
+                Debug.Log("Initializing level data");
+                InitializeLevelData();
+            }
 
+        }
         GUI.EndClip();
     }
 
 
     private void InitializeLevelData()
-    {
-
-      
+    {     
         for (int i = 1; i <= SIDES; i++)
         {
             var tempSideTiles = new SideTiles();
@@ -69,12 +61,12 @@ public class LevelDataAssetEditor : Editor
             if (!targetAsset.levelTiles.ContainsKey((Side)i))
             {
                 targetAsset.levelTiles.Add((Side)i, tempSideTiles);
-                targetAsset.levelTiles[(Side)i].tileData = new TileData[tileDataSize];
+                targetAsset.levelTiles[(Side)i].tileData = new TileData[TILEDATASIZE];
                
             }
             else
             {
-                targetAsset.levelTiles[(Side)i].tileData = new TileData[tileDataSize];
+                targetAsset.levelTiles[(Side)i].tileData = new TileData[TILEDATASIZE];
             }
         }
     }
@@ -94,27 +86,27 @@ public class LevelDataAssetEditor : Editor
 
 
         GUI.BeginClip(inspectorDrawZoneRectangle);
-
-        if (GUI.Button(new Rect(START_X, START_Y, 500, 30), "Reinitialize LevelData"))
         {
-            InitializeLevelData();
-            Debug.Log("Reset all level data");
-        }
-
-
-        for (int i = 0; i <= GRIDSIZE; i++)
-        {
-            if (i % 3 == 0 && i <= GRIDSIZE)
+            if (GUI.Button(new Rect(START_X, START_Y, 500, 30), "Reinitialize LevelData"))
             {
-                currentDrawingPosition.y += RECTSIZE;
-                currentDrawingPosition.x = START_X;
+                InitializeLevelData();
+                Debug.Log("Reset all level data");
             }
 
-            TryDrawFace(currentDrawingPosition.x, currentDrawingPosition.y, i);
 
-            currentDrawingPosition.x += RECTSIZE;
+            for (int i = 0; i <= GRIDSIZE; i++)
+            {
+                if (i % 3 == 0 && i <= GRIDSIZE)
+                {
+                    currentDrawingPosition.y += RECTSIZE;
+                    currentDrawingPosition.x = START_X;
+                }
+
+                TryDrawFace(currentDrawingPosition.x, currentDrawingPosition.y, i);
+
+                currentDrawingPosition.x += RECTSIZE;
+            }
         }
-
         GUI.EndClip();
     }
 
@@ -155,7 +147,7 @@ public class LevelDataAssetEditor : Editor
         var currentX = 2f;
         var currentY = -buttonSize + 2;
 
-        for (int i = 0; i < tileDataSize; i++)
+        for (int i = 0; i < TILEDATASIZE; i++)
         {
             if (i % 3 == 0)
             {
@@ -175,15 +167,14 @@ public class LevelDataAssetEditor : Editor
         Rect buttonRect = new Rect(x, y, buttonSize - buttonOffset, buttonSize - buttonOffset);
 
         GUILayout.BeginArea(buttonRect);
+        {
+            if (targetAsset.levelTiles.ContainsKey(side))
+                targetAsset.levelTiles[side].tileData[buttonIndex] = EditorGUILayout.ObjectField(targetAsset.levelTiles[side].tileData[buttonIndex], typeof(TileData), false) as TileData;
+            else
+                targetAsset.levelTiles.Add(side, null);
 
-        if (targetAsset.levelTiles.ContainsKey(side))
-            targetAsset.levelTiles[side].tileData[buttonIndex] = EditorGUILayout.ObjectField(targetAsset.levelTiles[side].tileData[buttonIndex], typeof(TileData), false) as TileData;
-        else
-            targetAsset.levelTiles.Add(side, null);
-   
-
+        }
         GUILayout.EndArea();
-
 
     }
 

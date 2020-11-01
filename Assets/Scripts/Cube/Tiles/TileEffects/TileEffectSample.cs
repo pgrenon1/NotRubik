@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileEffectDefault : TileEffect
+public class TileEffectSample : TileEffect
 {
-  //  public TileEffectDefault(TileEffectData _tileEffectData) : base(_tileEffectData)  { }
+   //A sample class that represents an implemented TileEffect
 
     public override bool Apply(Actor actor)
     {
