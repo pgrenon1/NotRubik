@@ -1,18 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Serialization;
 
 public class Tile : MonoBehaviour
 {
-
-    public TileData tileData;
-    public Facelet AttachedFacelet { get; set; }
-
-
-    private void Start()
-    {
-        DisplayTileEffect(true);
-    }
+    public TileData tileType;
+    public Facelet Facelet { get; set; }
 
     public bool DisplayTileEffect(bool visibility)
     {
@@ -22,8 +15,4 @@ public class Tile : MonoBehaviour
       //  attachedFacelet.effectVisual.sprite = tileData.tileEffects[0].GetTileEffectData().tileEffectIcon;
         return true;
     }
-
-
-
-    
 }

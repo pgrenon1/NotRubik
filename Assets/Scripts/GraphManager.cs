@@ -228,17 +228,10 @@ public class GraphManager : OdinserializedSingletonBehaviour<GraphManager>
 
                     if (outwardFacelet != null)
                     {
+                        var nodePosition = outwardFacelet.transform.position + worldDirection.normalized * nodeDistance;
+                        var newNode = PointGraph.AddNode((Int3)nodePosition);
 
-                        //for (int i = 0 ; i < Cube.subdivisions; i++)
-                        //{
-       
-                            //TODO Correctly subdivide a Facelet
-                            var nodePosition = outwardFacelet.transform.position + worldDirection.normalized * nodeDistance;
-                            var newNode = PointGraph.AddNode((Int3)nodePosition);
-
-                            Nodes[side].Add(newNode);
-                       // }
-
+                        Nodes[side].Add(newNode);
                     }
                 }
             }

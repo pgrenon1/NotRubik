@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using Random = UnityEngine.Random;
+using Ludiq.PeekCore;
 
 public class Cube : OdinSerializedBehaviour
 {
@@ -58,10 +59,52 @@ public class Cube : OdinSerializedBehaviour
 
         SetupSides();
 
+        InitOutwardFacingFacelets();
+
         Graph = GetComponent<GraphManager>();
         Graph.Init(this);
 
         _isRotatingSide = false;
+    }
+
+    private void InitOutwardFacingFacelets()
+    {
+        foreach (KeyValuePair<Side, List<Cubelet>> entry in Sides)
+        {
+            var side = entry.Key;
+            var cubelets = entry.Value;
+
+            var worldDirection = Utils.GetWorldDirectionForSide(side);
+            foreach (var cubelet in cubelets)
+            {
+                var outwardFacelet = cubelet.GetFaceletAtWorldDirection(worldDirection);
+                outwardFacelet.IsOutwardFacing = true;
+
+                //// @phil TODO : Destroy unusedFacelets.
+                //foreach (var facelet in cubelet.facelets)
+                //{
+                //    if (facelet != outwardFacelet)
+                //    {
+                //        Destroy(facelet.tile.gameObject);
+                //        //DestroyImmediate(facelet.gameObject);
+                //    }
+                //}
+            }
+        }
+
+        InitTiles();
+    }
+
+    private void InitTiles()
+    {
+        foreach (var cubelet in AllCubelets)
+        {
+            foreach (var facelet in cubelet.facelets)
+            {
+                if (!facelet.IsOutwardFacing)
+                    DestroyImmediate(facelet.tile.gameObject);
+            }
+        }
     }
 
     private void Update()
